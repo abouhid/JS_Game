@@ -13,6 +13,9 @@ let gameOptions = {
   // platform width range, in pixels
   platformSizeRange: [90, 300],
 
+  // platform max and min height, as screen height ratio
+  platformVerticalLimit: [0.4, 0.8],
+
   // a height range between rightmost platform and next platform to be spawned
   platformHeightRange: [-5, 5],
 };
@@ -40,6 +43,7 @@ export default class GameScene extends Phaser.Scene {
   }
   create() {
     this.add.image(config.width / 2, config.height / 2, "sky");
+    this.addedPlatforms = 0;
 
     platforms = this.physics.add.staticGroup();
 
@@ -47,8 +51,8 @@ export default class GameScene extends Phaser.Scene {
      this.platformGroup = this.add.group({
 
       // once a platform is removed, it's added to the pool
-      removeCallback: function(platform){
-          platform.scene.platformPool.add(platform)
+      removeCallback: function(platform1){
+          platform1.scene.platformPool.add(platform1)
       }
   });
 
@@ -56,19 +60,19 @@ export default class GameScene extends Phaser.Scene {
   this.platformPool = this.add.group({
 
       // once a platform is removed from the pool, it's added to the active platforms group
-      removeCallback: function(platform){
-          platform.scene.platformGroup.add(platform)
+      removeCallback: function(platform1){
+          platform1.scene.platformGroup.add(platform1)
       }
   });
 
-  this.addPlatform(0,0,0)
+  this.addPlatform(game.config.width, game.config.width / 2, game.config.height * gameOptions.platformVerticalLimit[1]);
 
 
     platforms.create(400, 568, "ground").setScale(2).refreshBody();
 
     platforms.create(600, 400, "ground");
     // platforms.create(50, 250, 'ground');
-    // platforms.create(750, 220, 'ground');
+    platforms.create(750, 220, 'ground');
 
     player = this.physics.add.sprite(100, 0, "dude");
 
@@ -77,6 +81,8 @@ export default class GameScene extends Phaser.Scene {
     player.setCollideWorldBounds(true);
     player.body.setGravityY(500);
     this.physics.add.collider(player, platforms);
+    this.physics.add.collider(player, this.platformGroup);
+
 
     this.anims.create({
       key: "left",
@@ -111,31 +117,31 @@ export default class GameScene extends Phaser.Scene {
   }
 
   addPlatform(platformWidth, posX, posY) {
-    // this.addedPlatforms++;
-    // let platform;
-    // if (this.platformPool.getLength()) {
-    //   platform = this.platformPool.getFirst();
-    //   platform.x = posX;
-    //   platform.y = posY;
-    //   platform.active = true;
-    //   platform.visible = true;
-    //   this.platformPool.remove(platform);
-    //   let newRatio = platformWidth / platform.displayWidth;
-    //   platform.displayWidth = platformWidth;
-    //   platform.tileScaleX = 1 / platform.scaleX;
-    // } else {
-    //   platform = this.add.tileSprite(posX, posY, platformWidth, 32, "platform");
-    //   this.physics.add.existing(platform);
-    //   platform.body.setImmovable(true);
-    //   platform.body.setVelocityX(
-    //     Phaser.Math.Between(
-    //       gameOptions.platformSpeedRange[0],
-    //       gameOptions.platformSpeedRange[1]
-    //     ) * -1
-    //   );
-    //   platform.setDepth(2);
-    //   this.platformGroup.add(platform);
-    // }
+    this.addedPlatforms++;
+    let platform1;
+    if (this.platformPool.getLength()) {
+      platform1 = this.platformPool.getFirst();
+      platform1.x = posX;
+      platform1.y = posY;
+      platform1.active = true;
+      platform1.visible = true;
+      this.platformPool.remove(platform1);
+      let newRatio = platformWidth / platform1.displayWidth;
+      platform1.displayWidth = platformWidth;
+      platform1.tileScaleX = 1 / platform1.scaleX;
+    } else {
+      platform1 = this.add.tileSprite(posX, posY, platformWidth, 32, "platform");
+      this.physics.add.existing(platform1);
+      platform1.body.setImmovable(true);
+      platform1.body.setVelocityX(
+        Phaser.Math.Between(
+          gameOptions.platformSpeedRange[0],
+          gameOptions.platformSpeedRange[1]
+        ) * -1
+      );
+      platform1.setDepth(2);
+      this.platformGroup.add(platform1);
+    }
     // this.nextPlatformDistance = Phaser.Math.Between(
     //   gameOptions.spawnRange[0],
     //   gameOptions.spawnRange[1]

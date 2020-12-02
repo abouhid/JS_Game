@@ -203,10 +203,7 @@ function update() {
           this.canJump = false;
           player.setVelocityY(-380);
         }
-      }
-
-
-        
+      }        
 
 }
 function resize(){
