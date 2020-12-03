@@ -45,9 +45,7 @@ export default class Player extends Entity {
     this.body.setBounce(0.1);
     this.body.setGravityY(500);
   }
-  
-  
-  
+   
   movements() {
     const jumped = Phaser.Input.Keyboard.JustDown(this.cursors.up);
     const jumpedW = Phaser.Input.Keyboard.JustDown(this.key_W);
@@ -78,6 +76,19 @@ export default class Player extends Entity {
   }
 
   update() {
+
+    if (this.x < 0) {
+      this.x = game.config.width;
+    } else if (this.x >= game.config.width) {
+      this.x = 0;
+    }
+    if (this.y < game.config.height / 3) {
+      this.addPlatform(
+        nextPlatformWidth,
+        game.config.width + nextPlatformWidth / 2,
+        this.y
+      );
+    }
     
   };
 }
