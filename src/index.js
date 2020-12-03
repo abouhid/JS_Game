@@ -22,6 +22,7 @@ class Game extends Phaser.Game {
     this.scene.add('Game', GameScene);
     this.scene.add('UserInput', UserInput);
     this.scene.start('Boot');
+    // this.world.setBounds(0, 0, 1920, 1920); 
   }
 }
 

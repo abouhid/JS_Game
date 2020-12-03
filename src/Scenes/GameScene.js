@@ -2,7 +2,7 @@ import "phaser";
 import config from "../Config/config";
 
 let platforms, stars, bombs, player, cursors;
-
+let created = true
 let gameOptions = {
   // platform speed range, in pixels per second
   platformSpeedRange: [150, 150],
@@ -66,25 +66,29 @@ export default class GameScene extends Phaser.Scene {
       }
   });
 
-  this.addPlatform(game.config.width/2, game.config.width / 2, game.config.height * gameOptions.platformVerticalLimit[1]);
+  this.addPlatform(game.config.width/3, game.config.width / 2, game.config.height*2/3);
+  this.addPlatform(game.config.width/2, game.config.width, game.config.height*1/3);
 
 
     platforms.create(400, 568, "ground").setScale(2).refreshBody();
 
-    platforms.create(600, 400, "ground");
+    // platforms.create(600, 400, "ground");
     // platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    // platforms.create(750, 220, 'ground');
 
     player = this.physics.add.sprite(0, game.config.height-220, "dude");
 
     player.setBounce(0.1);
 
-    player.setCollideWorldBounds(true);
+    // player.setCollideWorldBounds(true);
+    // player.checkCollision = { up: true, down: true, left: false, right: false };
+    //  this.game.world.setBounds(0, 0, 1920, 1920); 
     player.body.setGravityY(500);
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player, this.platformGroup);
-    console.log(this.platformGroup)
-    console.log(player)
+  
+    // var cam2 = this.cameras.add(400, 0, 400, 300);
+    // cam2.startFollow(clown, player, 0.5, 0.5);
 
     this.anims.create({
       key: "left",
@@ -122,11 +126,9 @@ export default class GameScene extends Phaser.Scene {
     this.addedPlatforms++;
     let platform1;
 
-    let randx =  Phaser.Math.Between(0,game.config.width)
-    let randy =  Phaser.Math.Between(0,game.config.height)
-
+    
     if (this.platformPool.getLength()) {
-
+      
       platform1 = this.platformPool.getFirst();
       platform1.x = posX;
       platform1.y = posY;
@@ -136,9 +138,11 @@ export default class GameScene extends Phaser.Scene {
       let newRatio = platformWidth / platform1.displayWidth;
       platform1.displayWidth = platformWidth;
       platform1.tileScaleX = 1 / platform1.scaleX;
+      console.log("AA")
     } else {
+      console.log("BB")
 
-      platform1 = this.add.tileSprite(randx, randy, platformWidth, 32, "platform");
+      platform1 = this.add.tileSprite(posX, posY, platformWidth, 32, "platform");
       this.physics.add.existing(platform1);
       platform1.body.setImmovable(true);
       platform1.body.setVelocityX(
@@ -192,28 +196,25 @@ export default class GameScene extends Phaser.Scene {
     this.platformGroup.getChildren().forEach(function(platform){
       let platformDistance = game.config.width - platform.x - platform.displayWidth / 2;
       let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
-
       
-      // if(platformDistance < minDistance){
-      //   minDistance = platformDistance;
-      //   rightmostPlatformHeight = platform.y;
-      // }
-      if(platform.x < - platform.displayWidth / 2){
-        this.platformGroup.killAndHide(platform);
-        this.platformGroup.remove(platform);
+      if(platform.x - platform.displayWidth / 2 < 0 && created){
+        created = false
         this.addPlatform(nextPlatformWidth,game.config.width+nextPlatformWidth/2,platform.y)
       }
+      if(platform.x + platform.displayWidth / 2 < 0 ){
+        created = true
+        this.platformGroup.killAndHide(platform);
+        this.platformGroup.remove(platform);
+      }
+
     }, this);
+    if(player.x <0){
+      player.x = game.config.width
+    }else if (player.x >=game.config.width) {
+      player.x = 0;
+
+    }
     
-    // if(minDistance > 0){
-    //   let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
-    //   let platformRandomHeight = gameOptions.platformHeighScale * Phaser.Math.Between(gameOptions.platformHeightRange[0], gameOptions.platformHeightRange[1]);
-    //   let nextPlatformGap = rightmostPlatformHeight + platformRandomHeight;
-    //   let minPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[0];
-    //   let maxPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[1];
-    //   let nextPlatformHeight = Phaser.Math.Clamp(nextPlatformGap, minPlatformHeight, maxPlatformHeight);
-    //   this.addPlatform(nextPlatformWidth, game.config.width + nextPlatformWidth / 2, nextPlatformHeight);
-    // }
   }
   
   resize(){
