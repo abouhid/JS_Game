@@ -75,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
     // platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
 
-    player = this.physics.add.sprite(100, 0, "dude");
+    player = this.physics.add.sprite(0, game.config.height-220, "dude");
 
     player.setBounce(0.1);
 
@@ -84,6 +84,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player, this.platformGroup);
     console.log(this.platformGroup)
+    console.log(player)
 
     this.anims.create({
       key: "left",
@@ -184,32 +185,35 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
+
     let minDistance = game.config.width;
-    let rightmostPlatformHeight = 0;
+    // let rightmostPlatformHeight = 0;
     
     this.platformGroup.getChildren().forEach(function(platform){
       let platformDistance = game.config.width - platform.x - platform.displayWidth / 2;
+      let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
+
       
-      
-      if(platformDistance < minDistance){
-        minDistance = platformDistance;
-        rightmostPlatformHeight = platform.y;
-      }
+      // if(platformDistance < minDistance){
+      //   minDistance = platformDistance;
+      //   rightmostPlatformHeight = platform.y;
+      // }
       if(platform.x < - platform.displayWidth / 2){
         this.platformGroup.killAndHide(platform);
         this.platformGroup.remove(platform);
+        this.addPlatform(nextPlatformWidth,game.config.width+nextPlatformWidth/2,platform.y)
       }
     }, this);
     
-    if(minDistance > 0){
-      let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
-      let platformRandomHeight = gameOptions.platformHeighScale * Phaser.Math.Between(gameOptions.platformHeightRange[0], gameOptions.platformHeightRange[1]);
-      let nextPlatformGap = rightmostPlatformHeight + platformRandomHeight;
-      let minPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[0];
-      let maxPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[1];
-      let nextPlatformHeight = Phaser.Math.Clamp(nextPlatformGap, minPlatformHeight, maxPlatformHeight);
-      this.addPlatform(nextPlatformWidth, game.config.width + nextPlatformWidth / 2, nextPlatformHeight);
-    }
+    // if(minDistance > 0){
+    //   let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
+    //   let platformRandomHeight = gameOptions.platformHeighScale * Phaser.Math.Between(gameOptions.platformHeightRange[0], gameOptions.platformHeightRange[1]);
+    //   let nextPlatformGap = rightmostPlatformHeight + platformRandomHeight;
+    //   let minPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[0];
+    //   let maxPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[1];
+    //   let nextPlatformHeight = Phaser.Math.Clamp(nextPlatformGap, minPlatformHeight, maxPlatformHeight);
+    //   this.addPlatform(nextPlatformWidth, game.config.width + nextPlatformWidth / 2, nextPlatformHeight);
+    // }
   }
   
   resize(){
