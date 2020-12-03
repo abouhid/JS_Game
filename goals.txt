@@ -1,0 +1,7 @@
+manage to create random platforms
+make them go down and start again
+camera move when certain y is reached 
+
+
+
+REMEMBER TO CHANGE NAMES (github and base.js)

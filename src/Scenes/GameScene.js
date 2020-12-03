@@ -5,7 +5,7 @@ let platforms, stars, bombs, player, cursors;
 
 let gameOptions = {
   // platform speed range, in pixels per second
-  platformSpeedRange: [300, 300],
+  platformSpeedRange: [150, 150],
   // spawn range, how far should be the rightmost platform from the right edge
   // before next platform spawns, in pixels
   spawnRange: [80, 300],
@@ -28,6 +28,7 @@ export default class GameScene extends Phaser.Scene {
     
     this.load.image("sky", "../src/assets/sky.png");
     this.load.image("ground", "../src/assets/platform.png");
+    this.load.image("platform", "../src/assets/plattexture.png");
     this.load.image("star", "../src/assets/star.png");
     this.load.image("bomb", "../src/assets/bomb.png");
     this.load.spritesheet("dude", "../src/assets/dude.png", {
@@ -65,7 +66,7 @@ export default class GameScene extends Phaser.Scene {
       }
   });
 
-  this.addPlatform(game.config.width, game.config.width / 2, game.config.height * gameOptions.platformVerticalLimit[1]);
+  this.addPlatform(game.config.width/2, game.config.width / 2, game.config.height * gameOptions.platformVerticalLimit[1]);
 
 
     platforms.create(400, 568, "ground").setScale(2).refreshBody();
@@ -82,7 +83,7 @@ export default class GameScene extends Phaser.Scene {
     player.body.setGravityY(500);
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player, this.platformGroup);
-
+    console.log(this.platformGroup)
 
     this.anims.create({
       key: "left",
@@ -119,7 +120,12 @@ export default class GameScene extends Phaser.Scene {
   addPlatform(platformWidth, posX, posY) {
     this.addedPlatforms++;
     let platform1;
+
+    let randx =  Phaser.Math.Between(0,game.config.width)
+    let randy =  Phaser.Math.Between(0,game.config.height)
+
     if (this.platformPool.getLength()) {
+
       platform1 = this.platformPool.getFirst();
       platform1.x = posX;
       platform1.y = posY;
@@ -130,7 +136,8 @@ export default class GameScene extends Phaser.Scene {
       platform1.displayWidth = platformWidth;
       platform1.tileScaleX = 1 / platform1.scaleX;
     } else {
-      platform1 = this.add.tileSprite(posX, posY, platformWidth, 32, "platform");
+
+      platform1 = this.add.tileSprite(randx, randy, platformWidth, 32, "platform");
       this.physics.add.existing(platform1);
       platform1.body.setImmovable(true);
       platform1.body.setVelocityX(
@@ -142,34 +149,31 @@ export default class GameScene extends Phaser.Scene {
       platform1.setDepth(2);
       this.platformGroup.add(platform1);
     }
-    // this.nextPlatformDistance = Phaser.Math.Between(
-    //   gameOptions.spawnRange[0],
-    //   gameOptions.spawnRange[1]
-    // );
-    console.log('aaa')
+    this.nextPlatformDistance = Phaser.Math.Between(
+      gameOptions.spawnRange[0],
+      gameOptions.spawnRange[1]
+    );
 
   }
 
   update() {
     cursors = this.input.keyboard.createCursorKeys();
-
     const jumped = Phaser.Input.Keyboard.JustDown(cursors.up);
     const jumpedW = Phaser.Input.Keyboard.JustDown(this.key_W);
-
+    
     if (cursors.left.isDown || this.key_A.isDown) {
       player.setVelocityX(-200);
-
+      
       player.anims.play("left", true);
     } else if (cursors.right.isDown || this.key_D.isDown) {
       player.setVelocityX(200);
-
+      
       player.anims.play("right", true);
     } else {
       player.setVelocityX(0);
-
+      
       player.anims.play("turn");
     }
-
     if (jumped || jumpedW) {
       if (player.body.touching.down) {
         this.canJump = true;
@@ -179,8 +183,35 @@ export default class GameScene extends Phaser.Scene {
         player.setVelocityY(-380);
       }
     }
-  }
 
+    let minDistance = game.config.width;
+    let rightmostPlatformHeight = 0;
+    
+    this.platformGroup.getChildren().forEach(function(platform){
+      let platformDistance = game.config.width - platform.x - platform.displayWidth / 2;
+      
+      
+      if(platformDistance < minDistance){
+        minDistance = platformDistance;
+        rightmostPlatformHeight = platform.y;
+      }
+      if(platform.x < - platform.displayWidth / 2){
+        this.platformGroup.killAndHide(platform);
+        this.platformGroup.remove(platform);
+      }
+    }, this);
+    
+    if(minDistance > 0){
+      let nextPlatformWidth = Phaser.Math.Between(gameOptions.platformSizeRange[0], gameOptions.platformSizeRange[1]);
+      let platformRandomHeight = gameOptions.platformHeighScale * Phaser.Math.Between(gameOptions.platformHeightRange[0], gameOptions.platformHeightRange[1]);
+      let nextPlatformGap = rightmostPlatformHeight + platformRandomHeight;
+      let minPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[0];
+      let maxPlatformHeight = game.config.height * gameOptions.platformVerticalLimit[1];
+      let nextPlatformHeight = Phaser.Math.Clamp(nextPlatformGap, minPlatformHeight, maxPlatformHeight);
+      this.addPlatform(nextPlatformWidth, game.config.width + nextPlatformWidth / 2, nextPlatformHeight);
+    }
+  }
+  
   resize(){
     let canvas = document.querySelector("canvas");
     let windowWidth = window.innerWidth;
