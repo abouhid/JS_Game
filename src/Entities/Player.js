@@ -11,28 +11,40 @@ export default class Player extends Entity {
       key: "left",
       frames: this.scene.anims.generateFrameNumbers("dude", {
         start: 0,
-        end: 3,
+        end: 4,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+    
+    
+    this.scene.anims.create({
+      key: "turn",
+      frames: this.scene.anims.generateFrameNumbers("dude",
+      {
+        start: 0,
+        end: 16,
+      }),      
+      frameRate: 10,
+      repeat: -1,
+    });
+   
+    
+    this.scene.anims.create({
+      key: "right",
+      frames: this.scene.anims.generateFrameNumbers("dude", {
+        start: 8,
+        end: 15,
       }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.scene.anims.create({
-      key: "turn",
-      frames: [
-        {
-          key: "dude",
-          frame: 4,
-        },
-      ],
-      frameRate: 20,
-    });
-
-    this.scene.anims.create({
-      key: "right",
+      key: "jump",
       frames: this.scene.anims.generateFrameNumbers("dude", {
         start: 5,
-        end: 8,
+        end: 10,
       }),
       frameRate: 10,
       repeat: -1,
@@ -59,12 +71,9 @@ export default class Player extends Entity {
       this.body.setVelocityX(200);
       
       this.anims.play("right", true);
-    } else {
-      this.body.setVelocityX(0);
-      
-      this.anims.play("turn");
-    }
-    if (jumped || jumpedW) {
+    } else if (jumped || jumpedW) {
+      this.anims.play("jump");
+
       if (this.body.touching.down) {
         this.canJump = true;
         this.body.setVelocityY(-380);
@@ -73,6 +82,13 @@ export default class Player extends Entity {
         this.body.setVelocityY(-380);
       }
     }
+    
+    else {
+      this.body.setVelocityX(0);
+      
+      this.anims.play("turn");
+    }
+   
   }
 
   update() {

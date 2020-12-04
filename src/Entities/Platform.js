@@ -65,29 +65,29 @@ export default class Platform extends Entity {
      platHeight -=distPlat
      })
 
-
-     this.time.addEvent({
-      delay: 1000,
-    
-      callback() {
-    
-      }
-    
-    })
-
   }
 
   addPlatform(platformWidth, posX, posY) {
     let platform;
 
-      platform = this.scene.add.tileSprite(
+      if(this.scene.platformPool.getLength()){
+        platform = this.scene.platformPool.getFirst();
+        platform.x = posX;
+        platform.y = posY;
+        platform.displayWidth = platformWidth;
+        platform.active = true;
+        platform.visible = true;
+        this.scene.platformPool.remove(platform);
+        console.log('one')
+    }
+    else{
+       platform = this.scene.add.tileSprite(
         posX,
         posY,
         platformWidth,
         32,
         "platform"
       );
-      
       this.scene.physics.add.existing(platform);
       platform.body.setImmovable(true);
       platform.body.setVelocityX(
@@ -96,7 +96,34 @@ export default class Platform extends Entity {
           gameOptions.platformSpeedRange[1]
         ) * -1
       );
+
       this.scene.platformGroup.add(platform);
+    }
+    this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
+
+      this.scene.time.addEvent({
+        delay: 1000,
+        callback() {
+          if (platform.x - (platformWidth / 2) < 0) {
+            platform.body.setVelocityX(
+              Phaser.Math.Between(
+                gameOptions.platformSpeedRange[0],
+                gameOptions.platformSpeedRange[1]
+              ))
+          }
+          if (platform.x + (platformWidth / 2) > game.config.width) {
+            platform.body.setVelocityX(
+              Phaser.Math.Between(
+                gameOptions.platformSpeedRange[0],
+                gameOptions.platformSpeedRange[1]
+              )*-1)
+          }
+
+        },
+        callbackScope: this,
+        loop: true,
+      })
+  
   }
 
   update() {
@@ -105,8 +132,8 @@ export default class Platform extends Entity {
     //   gameOptions.platformSizeRange[0],
     //   gameOptions.platformSizeRange[1]
     // );
-
-
+    let minDistance = game.config.width;
+    let rightmostPlatformHeight = 0;
 
     // this.scene.platformGroup.getChildren().forEach(function (platform) {
       

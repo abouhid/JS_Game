@@ -16,9 +16,9 @@ export default class GameScene extends Phaser.Scene {
     this.load.image("platform", "../src/assets/plattexture.png");
     this.load.image("star", "../src/assets/star.png");
     this.load.image("bomb", "../src/assets/bomb.png");
-    this.load.spritesheet("dude", "../src/assets/dude.png", {
-      frameWidth: 32,
-      frameHeight: 48,
+    this.load.spritesheet("dude", "../src/assets/toast.png", {
+      frameWidth: 16,
+      frameHeight: 16,
     });
 
     // this.resize();
@@ -38,6 +38,8 @@ export default class GameScene extends Phaser.Scene {
       game.config.height - 120,
       "dude"
     );
+
+    this.player.setScale(2);
 
     this.platforms = new Platform(
       this,
