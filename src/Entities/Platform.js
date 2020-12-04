@@ -20,8 +20,9 @@ let created = true;
 
 export default class Platform extends Entity {
   constructor(scene, x, y, key) {
-    super(scene, x, y, key, 'Player');
+    super(scene, x, y, key, 'Platform');
     this.scene.addedPlatforms = 0;
+    this.visible = false;
 
     this.scene.platformGroup = this.scene.add.group({
       // once a platform is removed, it's added to the pool
@@ -38,40 +39,53 @@ export default class Platform extends Entity {
       },
     });
 
+
+    this.addPlatform(
+      game.config.width / 3,
+      game.config.width / 2,
+      (game.config.height * 2) / 3
+    );
+    this.addPlatform(
+      game.config.width / 2,
+      game.config.width,
+      (game.config.height * 1) / 3
+    );
+
+
   }
 
   addPlatform(platformWidth, posX, posY) {
     this.scene.addedPlatforms++;
-    let platform1;
+    let platform;
 
     if (this.scene.platformPool.getLength()) {
-      platform1 = this.scene.platformPool.getFirst();
-      platform1.x = posX;
-      platform1.y = posY;
-      platform1.active = true;
-      platform1.visible = true;
-      this.scene.platformPool.remove(platform1);
-      let newRatio = platformWidth / platform1.displayWidth;
-      platform1.displayWidth = platformWidth;
-      platform1.tileScaleX = 1 / platform1.scaleX;
+      platform = this.scene.platformPool.getFirst();
+      platform.x = posX;
+      platform.y = posY;
+      platform.active = true;
+      platform.visible = true;
+      this.scene.platformPool.remove(platform);
+
+      platform.displayWidth = platformWidth;
+      platform.tileScaleX = 1 / platform.scaleX;
     } else {
-      platform1 = this.scene.add.tileSprite(
+      platform = this.scene.add.tileSprite(
         posX,
         posY,
         platformWidth,
         32,
         "platform"
       );
-      this.scene.physics.add.existing(platform1);
-      platform1.body.setImmovable(true);
-      platform1.body.setVelocityX(
+      this.scene.physics.add.existing(platform);
+      platform.body.setImmovable(true);
+      platform.body.setVelocityX(
         Phaser.Math.Between(
           gameOptions.platformSpeedRange[0],
           gameOptions.platformSpeedRange[1]
         ) * -1
       );
-      platform1.setDepth(2);
-      this.scene.platformGroup.add(platform1);
+      platform.setDepth(2);
+      this.scene.platformGroup.add(platform);
     }
     this.nextPlatformDistance = Phaser.Math.Between(
       gameOptions.spawnRange[0],

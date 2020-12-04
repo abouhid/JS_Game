@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,12 +8,6 @@ module.exports = {
   devtool: 'eval-source-map',
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: {
-          loader: 'css-loader',
-        },
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -31,9 +24,11 @@ module.exports = {
         use: 'file-loader',
       },
       {
-        test: /\.mp3$/,
-
-        loader: 'file-loader',
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ],
       },
     ],
   },
@@ -44,6 +39,8 @@ module.exports = {
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),
       WEBGL_RENDERER: JSON.stringify(true),
+      CANVAS_WIDTH: JSON.stringify(512),
+      CANVAS_HEIGHT: JSON.stringify(544),
     }),
     new HtmlWebpackPlugin({
       template: './index.html',

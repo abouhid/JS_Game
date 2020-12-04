@@ -67,7 +67,7 @@ export default class Player extends Entity {
     if (jumped || jumpedW) {
       if (this.body.touching.down) {
         this.canJump = true;
-        this.body.setVelocityY(-680);
+        this.body.setVelocityY(-380);
       } else if (this.canJump) {
         this.canJump = false;
         this.body.setVelocityY(-380);
@@ -76,19 +76,22 @@ export default class Player extends Entity {
   }
 
   update() {
-
+    this.scene.cameras.main.centerOn(
+      game.config.width / 2,
+      this.y - this.scene.game.config.height / 10
+    );
     if (this.x < 0) {
       this.x = game.config.width;
     } else if (this.x >= game.config.width) {
       this.x = 0;
     }
-    if (this.y < game.config.height / 3) {
-      this.addPlatform(
-        nextPlatformWidth,
-        game.config.width + nextPlatformWidth / 2,
-        this.y
-      );
-    }
+    // if (this.y < game.config.height / 3) {
+    //   this.addPlatform(
+    //     nextPlatformWidth,
+    //     game.config.width + nextPlatformWidth / 2,
+    //     this.y
+    //   );
+    // }
     
   };
 }
