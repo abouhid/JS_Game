@@ -58,8 +58,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    let minDistance = 800;
-    let checkpoint = 1000;
+  
     this.resize()
     this.player.movements();
     this.player.update();
