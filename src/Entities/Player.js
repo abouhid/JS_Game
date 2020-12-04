@@ -7,6 +7,7 @@ export default class Player extends Entity {
    
     this.cursors = scene.input.keyboard.createCursorKeys();
    
+      
     this.scene.anims.create({
       key: "left",
       frames: this.scene.anims.generateFrameNumbers("dude", {
@@ -61,8 +62,6 @@ export default class Player extends Entity {
   movements() {
     const jumped = Phaser.Input.Keyboard.JustDown(this.cursors.up);
     const jumpedW = Phaser.Input.Keyboard.JustDown(this.key_W);
-    
-
     if (this.cursors.left.isDown || this.key_A.isDown) {
       this.body.setVelocityX(-200);
       
@@ -71,7 +70,13 @@ export default class Player extends Entity {
       this.body.setVelocityX(200);
       
       this.anims.play("right", true);
-    } else if (jumped || jumpedW) {
+    } else {
+      this.body.setVelocityX(0);
+      
+      this.anims.play("turn");
+    }
+
+    if (jumped || jumpedW) {
       this.anims.play("jump");
 
       if (this.body.touching.down) {
@@ -82,13 +87,7 @@ export default class Player extends Entity {
         this.body.setVelocityY(-380);
       }
     }
-    
-    else {
-      this.body.setVelocityX(0);
-      
-      this.anims.play("turn");
-    }
-   
+
   }
 
   update() {
@@ -101,13 +100,7 @@ export default class Player extends Entity {
     } else if (this.x >= game.config.width) {
       this.x = 0;
     }
-    // if (this.y < game.config.height / 3) {
-    //   this.addPlatform(
-    //     nextPlatformWidth,
-    //     game.config.width + nextPlatformWidth / 2,
-    //     this.y
-    //   );
-    // }
+ 
     
   };
 }
