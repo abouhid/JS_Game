@@ -77,7 +77,7 @@ export default class Player extends Entity {
     }
 
     if (jumped || jumpedW) {
-      this.anims.play("jump");
+      // this.anims.play("jump");
 
       if (this.body.touching.down) {
         this.canJump = true;
@@ -100,8 +100,6 @@ export default class Player extends Entity {
     } else if (this.x >= game.config.width) {
       this.x = 0;
     }
- 
-    
   };
 }
 

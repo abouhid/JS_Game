@@ -3,8 +3,13 @@ import { Game } from "phaser";
 import config from "../Config/config";
 import Player from '../Entities/Player';
 import Platform from '../Entities/Platform';
+import Item from '../Entities/Item';
 
-let ground, stars, bombs, cursors;
+let ground;
+let player;
+let CoinLayer;
+let coins,coin;
+let text;
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -21,16 +26,12 @@ export default class GameScene extends Phaser.Scene {
       frameHeight: 48,
     });
 
-    // this.resize();
   }
   create() {
 
-    // this.add.image(config.width / 2, config.height / 2, "sky");
-    // console.log(this)
     this.bg_1 = this.add.tileSprite(0, 0, config.width , config.height, 'sky');
     this.bg_1.setOrigin(0)
     this.bg_1.setScrollFactor(0)
-    console.log(this.bg_1)
 
     this.player = new Player(
       this,
@@ -41,20 +42,42 @@ export default class GameScene extends Phaser.Scene {
 
     this.platforms = new Platform(
       this,
-      game.config.width / 2,
-      game.config.height/2,
+      0,
+      2000,
       "platform"
     );
 
+    
+    this.item = new Item(
+      this,
+      300,
+      300,
+      "star"
+    );
+    // this.item2 = new Item(
+    //   this,
+    //   300,
+    //   300,
+    //   "star"
+    // );
+    
     ground = this.physics.add.staticGroup();
 
     ground
       .create(400, game.config.height, "ground")
-      .setScale(2)
+      .setScale(4)
       .refreshBody();    
-    
+
+  
+
+      
     this.physics.add.collider(this.player, ground);
     this.physics.add.collider(this.player, this.platformGroup);
+    this.physics.add.collider(this.item.coins, ground);
+    this.physics.add.collider(this.item.coins, this.platformGroup);
+
+    this.physics.add.overlap(this.player, this.item.coins, this.item.collectCoin, null, this);
+    
   }
 
   update() {
@@ -62,9 +85,8 @@ export default class GameScene extends Phaser.Scene {
     this.resize()
     this.player.movements();
     this.player.update();
-    this.platforms.update();
-    this.bg_1.tilePositionY=this.scrollY*.3
-
+    this.item.update();
+    this.bg_1.tilePositionY=this.scrollY
 
   }
 

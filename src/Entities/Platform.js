@@ -1,22 +1,17 @@
 import 'phaser';
 import Entity from '../Entities/Entity';
+
 let gameOptions = {
-  // platform speed range, in pixels per second
-  platformSpeedRange: [500, 500],
-  // spawn range, how far should be the rightmost platform from the right edge
-  // before next platform spawns, in pixels
-  spawnRange: [80, 200],
+  platformSpeedRange: [200, 500],
 
-  // platform width range, in pixels
-  platformSizeRange: [90, 90],
+  spawnRange: [100,700],
 
-  // platform max and min height, as screen height ratio
+  platformSizeRange: [100, 500],
+
   platformVerticalLimit: [0.8, 1.4],
 
-  // a height range between rightmost platform and next platform to be spawned
   platformHeightRange: [-5, 5],
 };
-let created = true;
 
 export default class Platform extends Entity {
   constructor(scene, x, y, key) {
@@ -24,15 +19,12 @@ export default class Platform extends Entity {
     this.visible = false;
 
     this.scene.platformGroup = this.scene.add.group({
-      // once a platform is removed, it's added to the pool
       removeCallback: function (platform) {
         platform.scene.platformPool.add(platform);
       },
     });
 
-    // platform pool
     this.scene.platformPool = this.scene.add.group({
-      // once a platform is removed from the pool, it's added to the active platforms group
       removeCallback: function (platform) {
         platform.scene.platformGroup.add(platform);
       },
@@ -40,11 +32,6 @@ export default class Platform extends Entity {
 
     let distPlat = (game.config.height * 1) / 3
     let platHeight = (game.config.height * 2) / 3
-    // this.addPlatform(
-    //   game.config.width / 3,
-    //   game.config.width / 2,
-    //   (game.config.height * 2) / 3
-    // );
 
     const times = x => f => {
       if (x > 0) {
@@ -52,37 +39,27 @@ export default class Platform extends Entity {
         times (x - 1) (f)
       }
     }
-     times(8) (()=> {
+     times(12) (()=> {
        this.addPlatform(
-         game.config.width / 3,
-         game.config.width / 2,
+        Phaser.Math.Between(
+          gameOptions.platformSizeRange[0],
+          gameOptions.platformSizeRange[1]
+        ),
+        Phaser.Math.Between(
+          gameOptions.spawnRange[0],
+          gameOptions.spawnRange[1]
+        ),
          platHeight
        );
-      //  platHeight -=distPlat*Phaser.Math.FloatBetween(
-      //     gameOptions.platformVerticalLimit[0],
-      //     gameOptions.platformVerticalLimit[1]
-      //   );
+          
      platHeight -=distPlat
      })
-
   }
 
   addPlatform(platformWidth, posX, posY) {
     let platform;
-
-      if(this.scene.platformPool.getLength()){
-        platform = this.scene.platformPool.getFirst();
-        platform.x = posX;
-        platform.y = posY;
-        platform.displayWidth = platformWidth;
-        platform.active = true;
-        platform.visible = true;
-        this.scene.platformPool.remove(platform);
-        console.log('one')
-    }
-    else{
-       platform = this.scene.add.tileSprite(
-        posX,
+        platform = this.scene.add.tileSprite(
+          posX,
         posY,
         platformWidth,
         32,
@@ -98,65 +75,32 @@ export default class Platform extends Entity {
       );
 
       this.scene.platformGroup.add(platform);
-    }
+    
     this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
 
       this.scene.time.addEvent({
-        delay: 1000,
+        delay: 500,
         callback() {
-          if (platform.x - (platformWidth / 2) < 0) {
+          if (platform.x < 0) {
             platform.body.setVelocityX(
-              Phaser.Math.Between(
+              Phaser.Math.FloatBetween(
                 gameOptions.platformSpeedRange[0],
                 gameOptions.platformSpeedRange[1]
               ))
           }
-          if (platform.x + (platformWidth / 2) > game.config.width) {
+          if (platform.x > game.config.width) {
             platform.body.setVelocityX(
-              Phaser.Math.Between(
+              Phaser.Math.FloatBetween(
                 gameOptions.platformSpeedRange[0],
                 gameOptions.platformSpeedRange[1]
               )*-1)
           }
-
         },
         callbackScope: this,
         loop: true,
       })
   
   }
-
-  update() {
-    let nextPlatformWidth = 100
-    // let nextPlatformWidth = Phaser.Math.Between(
-    //   gameOptions.platformSizeRange[0],
-    //   gameOptions.platformSizeRange[1]
-    // );
-    let minDistance = game.config.width;
-    let rightmostPlatformHeight = 0;
-
-    // this.scene.platformGroup.getChildren().forEach(function (platform) {
-      
-    //   if (platform.x - platform.displayWidth / 2 < 0 && created) {
-    //     created = false;
-    //     this.addPlatform(
-    //       nextPlatformWidth,
-    //       game.config.width + nextPlatformWidth / 2,
-    //       platform.y
-    //       );
-          
-    //     }
-    //     if (platform.x <=-210) {
-    //       console.log(platform.x)
-    //       created = true;
-    //       platform.destroy();
-
-    //     }
-      
-
-    // }, this);
-  }
-
 }
 
 
