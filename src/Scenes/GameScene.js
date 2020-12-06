@@ -54,12 +54,6 @@ export default class GameScene extends Phaser.Scene {
       300,
       "star"
     );
-    // this.item2 = new Item(
-    //   this,
-    //   300,
-    //   300,
-    //   "star"
-    // );
     
     ground = this.physics.add.staticGroup();
 
@@ -68,17 +62,37 @@ export default class GameScene extends Phaser.Scene {
       .setScale(4)
       .refreshBody();    
 
-  
-
-      
     this.physics.add.collider(this.player, ground);
     this.physics.add.collider(this.player, this.platformGroup);
     this.physics.add.collider(this.item.coins, ground);
     this.physics.add.collider(this.item.coins, this.platformGroup);
 
-    this.physics.add.overlap(this.player, this.item.coins, this.item.collectCoin, null, this);
+    this.coinScore = 0;
+    this.score = this.add.text(630, 50, `Coins: ${this.coinScore}`, {
+      fontSize: '20px',
+      fill: '#ffffff'
+    });
+    this.health = this.add.text(50, 50, `Health: ${this.player.health}`, {
+      fontSize: '20px',
+      fill: '#ffffff'
+    });
+
+    this.score.setScrollFactor(0);
+    this.health.setScrollFactor(0);
+
+
+    this.physics.add.overlap(this.player, this.item.coins, this.collectCoin, null, this);
+    
     
   }
+  collectCoin(player, coin) {
+    this.player.body.setVelocityY(-380);
+     coin.destroy(coin.x, coin.y); // remove the tile/coin
+     this.coinScore ++; // increment the score
+
+     this.score.setText(`Coins: ${this.coinScore}`); // set the text to show the current score
+    // return false;
+}
 
   update() {
   

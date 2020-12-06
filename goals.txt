@@ -5,3 +5,10 @@ camera move when certain y is reached
 
 
 REMEMBER TO CHANGE NAMES (github and base.js)
+
+amanhã:
+
+tentar colocar estrelas em cima de plataformas
+adicionar inimigos
+diminuir health
+criar level 2

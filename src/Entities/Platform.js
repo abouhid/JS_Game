@@ -12,11 +12,14 @@ let gameOptions = {
 
   platformHeightRange: [-5, 5],
 };
-
+let i = 0;
 export default class Platform extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Platform');
     this.visible = false;
+
+    this.scene.numPlat = 2
+
 
     this.scene.platformGroup = this.scene.add.group({
       removeCallback: function (platform) {
@@ -39,7 +42,9 @@ export default class Platform extends Entity {
         times (x - 1) (f)
       }
     }
-     times(12) (()=> {
+    console.log(this.scene.numPlat)
+
+     times(this.scene.numPlat) (()=> {
        this.addPlatform(
         Phaser.Math.Between(
           gameOptions.platformSizeRange[0],
@@ -73,11 +78,10 @@ export default class Platform extends Entity {
           gameOptions.platformSpeedRange[1]
         ) * -1
       );
-
+      // console.log(i)
       this.scene.platformGroup.add(platform);
-    
-    this.nextPlatformDistance = Phaser.Math.Between(gameOptions.spawnRange[0], gameOptions.spawnRange[1]);
-
+      // console.log(this.scene.platformGroup.children.entries[i].y)
+      i++;
       this.scene.time.addEvent({
         delay: 500,
         callback() {

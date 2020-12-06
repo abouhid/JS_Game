@@ -24,7 +24,7 @@ export default class UserInput extends Phaser.Scene {
 
 
     // bmpText = this.sys.scene.add.bitmapText(10, 100, 'carrier_command','Drag me around !',34);
-    console.log(this.sys.game)
+    // console.log(this.sys.game)
 
     // bmpText.inputEnabled = true;
 

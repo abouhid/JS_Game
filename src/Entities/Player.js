@@ -6,7 +6,7 @@ export default class Player extends Entity {
     super(scene, x, y, key, 'Player');
    
     this.cursors = scene.input.keyboard.createCursorKeys();
-   
+   this.health = 100
       
     this.scene.anims.create({
       key: "left",
