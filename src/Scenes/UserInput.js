@@ -22,22 +22,12 @@ export default class UserInput extends Phaser.Scene {
       align: 'center',
     });
 
-
-    // bmpText = this.sys.scene.add.bitmapText(10, 100, 'carrier_command','Drag me around !',34);
-    // console.log(this.sys.game)
-
-    // bmpText.inputEnabled = true;
-
-    // bmpText.enableDrag();
      this.form = this.add.dom(config.width / 2, config.height / 2).createFromCache('nameForm');
       this.button = this.add.image(config.width / 2, (config.height / 2) + 100, 'blueButton1').setInteractive();
 
-    //  this.button = this.scene.add.sprite(0, 0, 'blueButton1').setInteractive();
+    // this.button = this.scene.add.sprite(0, 0, 'blueButton1').setInteractive();
      this.text = this.sys.scene.add.text(0, 0, 'Add Name', { fontSize: '32px', fill: '#fff' });
     Phaser.Display.Align.In.Center(this.text, this.button);
-
-    //  this.add(this.button);
-    // this.add(this.text);
 
     this.button.on('pointerover', function () {
       this.button.setTexture('blueButton2');

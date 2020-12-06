@@ -11,7 +11,7 @@ export default {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true
+      debug: false
     },
   },
 };
