@@ -11,8 +11,8 @@ export default class Player extends Entity {
     this.scene.anims.create({
       key: 'left',
       frames: this.scene.anims.generateFrameNumbers('dude', {
-        start: 9,
-        end: 11,
+        start: 12,
+        end: 14,
       }),
       frameRate: 10,
       repeat: -1,
@@ -22,8 +22,8 @@ export default class Player extends Entity {
       key: 'turn',
       frames: this.scene.anims.generateFrameNumbers('dude',
         {
-          start: 7,
-          end: 8,
+          start: 0,
+          end: 2,
         }),
       frameRate: 10,
       repeat: -1,
@@ -32,8 +32,8 @@ export default class Player extends Entity {
     this.scene.anims.create({
       key: 'right',
       frames: this.scene.anims.generateFrameNumbers('dude', {
-        start: 3,
-        end: 5,
+        start: 24,
+        end: 26,
       }),
       frameRate: 10,
       repeat: -1,

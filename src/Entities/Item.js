@@ -13,8 +13,8 @@ export default class Item extends Entity {
 
     this.scene.anims.create({
       key: 'spin',
-      frames: this.scene.anims.generateFrameNumbers('coin', { start: 0, end: 6 }),
-      frameRate: 10,
+      frames: this.scene.anims.generateFrameNumbers('banana', { start:5, end: 8 }),
+      frameRate: 5,
       repeat: -1,
     });
     this.scene.anims.create({
@@ -24,16 +24,18 @@ export default class Item extends Entity {
       repeat: -1,
     });
 
-    this.coins = this.scene.physics.add.group();
+    this.bananas = this.scene.physics.add.group();
 
     this.orbs = this.scene.physics.add.group();
     this.foods = this.scene.physics.add.group();
 
-    this.createCoin();
+    this.createBanana();
     for (let i = 0; i < this.scene.numPlat / 2; i++) {
       this.createOrb();
     }
     this.createFood();
+    this.food.setScale(1.5)
+
   }
 
   createOrb() {
@@ -44,29 +46,29 @@ export default class Item extends Entity {
     this.orbs.add(this.orb);
     this.orbs.children.iterate(orb => {
       orb.play('orbs');
-      // orb.setScale(1);
     });
   }
 
   createFood() {
-    const healthItem = ['food', 'egg'];
+    const healthItem = ['pizza', 'heart','beer'];
     this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0], this.gameOptions.intervalX[1]),
       Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), (healthItem[Math.round(Math.random())]));
     this.foods.add(this.food);
   }
 
-  createCoin() {
+  createBanana() {
     for (let i = 0; i < this.scene.numPlat; i++) {
       // console.log(this.scene.platformGroup.children.entries[i].y)
+      //  this.banana = this.scene.add.sprite(300, 300, 'banana');
 
-      this.coin = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 30, 'coin');
-      this.coins.add(this.coin);
-      this.coin.body.setSize(28, 47);
-      this.coin.body.setGravityY(500);
-      this.coin.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-      this.coins.children.iterate(coin => {
-        coin.play('spin');
-        coin.setScale(0.7);
+      this.banana = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 30, 'banana');
+      this.bananas.add(this.banana);
+      this.banana.body.setSize(28, 47);
+      this.banana.body.setGravityY(500);
+      this.banana.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+      this.bananas.children.iterate(banana => {
+        banana.play('spin');
+        banana.setScale(0.7);
       });
     }
   }

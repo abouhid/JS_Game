@@ -11,7 +11,7 @@ export default class GameOver extends Phaser.Scene {
     this.died = this.add.text(game.config.width / 3, game.config.height / 2 - 200,
       'You died!', { fontSize: '32px', fill: '#fff' });
     this.showScore = this.add.text(game.config.width / 3, game.config.height / 2 - 100,
-      `Score: ${this.coinScore}`, { fontSize: '32px', fill: '#fff' });
+      `Score: ${this.bananaScore}`, { fontSize: '32px', fill: '#fff' });
 
     this.madeByText = this.add.text(game.config.width / 3, game.config.height / 2,
       'Insert your name:', { fontSize: '26px', fill: '#fff' });

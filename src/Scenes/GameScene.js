@@ -14,15 +14,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', '../src/assets/farm.jpg');
+    this.load.image('sky', '../src/assets/jungle.jpg');
     this.load.image('ground', '../src/assets/platform.png');
     this.load.image('platform', '../src/assets/plattexture.png');
 
-    this.load.spritesheet('coin', '../src/assets/coin.png', {
-      frameWidth: 40,
-      frameHeight: 44,
-      startFrame: 0,
-      endFrame: 3,
+    this.load.spritesheet('banana', '../src/assets/banana.png', {
+      frameWidth: 31,
+      frameHeight: 58
     });
     this.load.spritesheet('orbs', '../src/assets/orbs.png', {
       frameWidth: 32,
@@ -30,24 +28,28 @@ export default class GameScene extends Phaser.Scene {
       startFrame: 5,
       endFrame: 9,
     });
-    this.load.spritesheet('chick', '../src/assets/chick.png', {
-      frameWidth: 24,
-      frameHeight: 24,
-    });
-    this.load.image('star', '../src/assets/star.png');
-    this.load.image('food', '../src/assets/food.png');
-    this.load.image('egg', '../src/assets/egg.png');
-
-    this.load.spritesheet('dude', '../src/assets/chicken.png', {
+    this.load.spritesheet('raffa', '../src/assets/monk.png', {
       frameWidth: 32,
       frameHeight: 32,
+    });
+  
+    this.load.image('star', '../src/assets/star.png');
+    this.load.image('food', '../src/assets/food.png');
+    this.load.image('heart', '../src/assets/heart.png');
+    this.load.image('pizza', '../src/assets/pizza.png');
 
+    this.load.image('beer', '../src/assets/beer.png');
+
+    this.load.spritesheet('dude', '../src/assets/monk.png', {
+      frameWidth: 32,
+      frameHeight: 32.5,
     });
   }
 
   create() {
     this.bg_1 = this.add.image(-100, -100, 'sky')
-    this.bg_1.setScale(2)
+    this.bg_1.setScale(0.5)
+
     this.bg_1.setOrigin(0);
     this.bg_1.setScrollFactor(0);
 
@@ -57,17 +59,17 @@ export default class GameScene extends Phaser.Scene {
 
     this.platforms = new Platform(this, 0, 2000, 'platform');
     this.item = new Item(this, 0, 2000, 'star');
-    this.enemy = new Enemy(this, 0, 2000, 'chick');
+    this.enemy = new Enemy(this, 0, 2000, 'raffa');
 
     this.numEnemies = 0;
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.player, this.platformGroup);
-    this.physics.add.collider(this.item.coins, this.ground);
-    this.physics.add.collider(this.item.coins, this.platformGroup);
+    this.physics.add.collider(this.item.bananas, this.ground);
+    this.physics.add.collider(this.item.bananas, this.platformGroup);
 
-    this.coinScore = 0;
+    this.bananaScore = 0;
 
-    this.score = this.add.text(630, 50, `Coins: ${this.coinScore}`, {
+    this.score = this.add.text(630, 50, `Bananas: ${this.bananaScore}`, {
       fontSize: '20px',
       fill: 'black',
     });
@@ -80,7 +82,7 @@ export default class GameScene extends Phaser.Scene {
     this.health.setScrollFactor(0);
 
     this.physics.add.overlap(this.player, this.item.orbs, this.collectOrb, null, this);
-    this.physics.add.overlap(this.player, this.item.coins, this.collectCoin, null, this);
+    this.physics.add.overlap(this.player, this.item.bananas, this.collectBanana, null, this);
     this.physics.add.overlap(this.player, this.item.foods, this.collectFood, null, this);
 
     this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);
@@ -93,17 +95,17 @@ export default class GameScene extends Phaser.Scene {
     this.player.canJump = true;
   }
 
-  collectCoin(player, coin) {
-    coin.destroy(coin.x, coin.y);
-    this.coinScore++;
+  collectBanana(player, banana) {
+    banana.destroy(banana.x, banana.y);
+    this.bananaScore++;
 
     this.numEnemies++;
-    this.score.setText(`Coins: ${this.coinScore}`);
+    this.score.setText(`Bananas: ${this.bananaScore}`);
 
-    if (this.item.coins.children.entries.length === 0) {
+    if (this.item.bananas.children.entries.length === 0) {
       this.enemy.createEnemy();
       this.item.createOrb();
-      this.item.createCoin();
+      this.item.createBanana();
       this.item.createFood();
     }
   }
