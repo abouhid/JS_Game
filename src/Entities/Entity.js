@@ -1,4 +1,5 @@
-import 'phaser'
+import Phaser from 'phaser';
+
 
 export default class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
@@ -8,6 +9,5 @@ export default class Entity extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.setData('type', type);
     this.setData('isDead', false);
-
   }
 }

@@ -1,4 +1,5 @@
-import 'phaser';
+import Phaser from 'phaser';
+
 
 export default {
   type: Phaser.AUTO,
@@ -6,12 +7,12 @@ export default {
   width: 800,
   height: 600,
   dom: {
-    createContainer: true
+    createContainer: true,
   },
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: false,
     },
   },
 };

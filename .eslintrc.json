@@ -11,6 +11,8 @@
   },
   "extends": ["airbnb-base"],
   "rules": {
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+
     "no-shadow": "off",
     "no-param-reassign": "off",
     "eol-last": "off",
