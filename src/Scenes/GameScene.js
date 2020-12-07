@@ -37,7 +37,8 @@ export default class GameScene extends Phaser.Scene {
       endFrame: 9
     });
     this.load.image('star', '../src/assets/star.png');
-    this.load.image('heart', '../src/assets/food.png');
+    this.load.image('food', '../src/assets/food.png');
+    this.load.image('egg', '../src/assets/egg.png');
 
     this.load.image('bomb', '../src/assets/bomb.png');
     this.load.spritesheet('dude', '../src/assets/chicken.png', {
@@ -86,9 +87,9 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.item.orbs, this.collectOrb, null, this);
     this.physics.add.overlap(this.player, this.item.coins, this.collectCoin, null, this);
-    this.physics.add.overlap(this.player, this.item.hearts, this.collectHeart, null, this);
+    this.physics.add.overlap(this.player, this.item.foods, this.collectFood, null, this);
 
-    this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);      
+    this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);
 
   }
 
@@ -105,21 +106,18 @@ export default class GameScene extends Phaser.Scene {
     this.numEnemies++
     this.score.setText(`Coins: ${this.coinScore}`);
 
-    // console.log(this.item.coins.children.entries.length)
-    if (this.item.coins.children.entries.length===0) {
+    if (this.item.coins.children.entries.length === 0) {
       this.enemy.createEnemy()
       this.item.createOrb()
       this.item.createCoin()
-      this.item.createHeart()
-
+      this.item.createFood()
     }
-
   }
-  
-  collectHeart(player, heart) {
+
+  collectFood(player, food) {
     this.cameras.main.flash();
     this.player.health += 20;
-    heart.destroy(heart.x, heart.y);
+    food.destroy(food.x, food.y);
     this.health.setText(`Health: ${this.player.health}`);
 
   }
@@ -131,24 +129,9 @@ export default class GameScene extends Phaser.Scene {
     baddie.destroy(baddie.x, baddie.y);
 
     this.health.setText(`Health: ${this.player.health}`);
+
     if (this.player.health <= 0) {
-      this.cameras.main.once('camerafadeincomplete', (camera) => {
-        camera.fadeOut(4000);
-      });
-      this.player.setTint(0xff0000);
-      this.player.anims.play('turn');
-      this.physics.pause();
-      this.input.disabled = true;
-      this.cameras.main.fadeOut(1000);
-
-     const self = this;
-
-      this.time.addEvent({
-        delay: 1500,
-        callback() {
-          self.gameOver();
-        },
-      });
+      this.gameOver()
     }
   }
 
@@ -162,7 +145,24 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.scene.start('GameOver');
+    this.cameras.main.once('camerafadeincomplete', (camera) => {
+      camera.fadeOut(4000);
+    });
+    this.player.setTint(0xff0000);
+    this.player.anims.play('turn');
+    this.physics.pause();
+    this.input.disabled = true;
+    this.cameras.main.fadeOut(1000);
+
+    const self = this;
+
+    this.time.addEvent({
+      delay: 1500,
+      callback() {
+        self.scene.start('GameOver');
+
+      },
+    });
   }
 
   resize() {

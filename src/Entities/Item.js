@@ -22,13 +22,13 @@ export default class Item extends Entity {
     this.coins = this.scene.physics.add.group();
 
   this.orbs = this.scene.physics.add.group();
-  this.hearts = this.scene.physics.add.group();
+  this.foods = this.scene.physics.add.group();
   
     this.createCoin()
     for (let i = 0; i < this.scene.numPlat/2; i++) {
     this.createOrb()
     }
-    this.createHeart()
+    this.createFood()
     
  
   }
@@ -51,9 +51,10 @@ export default class Item extends Entity {
     
   }
 
-  createHeart() {
-    this.heart = this.scene.add.sprite(300,300, 'heart');
-    this.hearts.add(this.heart);
+  createFood() {
+    let healthItem = ['food','egg' ]
+    this.food = this.scene.add.sprite(300,300, (healthItem[Math.round(Math.random())]));
+    this.foods.add(this.food);
 
   }
 
