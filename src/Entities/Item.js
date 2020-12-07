@@ -14,7 +14,7 @@ export default class Item extends Entity {
   });
   this.scene.anims.create({
     key: 'orbs',
-    frames: this.scene.anims.generateFrameNumbers('orbs', { start: 8, end: 11 }),
+    frames: this.scene.anims.generateFrameNumbers('orbs', { start: 0, end: 3 }),
     frameRate: 10,
     repeat: -1
 });
@@ -44,9 +44,9 @@ export default class Item extends Entity {
       this.orb = this.scene.add.sprite(Phaser.Math.Between(gameOptions.intervalX[0], gameOptions.intervalX[1]),
         Phaser.Math.Between(gameOptions.intervalY[0], gameOptions.intervalY[1]), 'orbs');
       this.orbs.add(this.orb);
-      this.orbs.children.iterate(coin => {
-        coin.play('orbs')
-        coin.setScale(1.5);
+      this.orbs.children.iterate(orb => {
+        orb.play('orbs')
+        // orb.setScale(1);
       })
     
   }

@@ -37,14 +37,13 @@ export default class GameScene extends Phaser.Scene {
       endFrame: 9
     });
     this.load.image('star', '../src/assets/star.png');
-    this.load.image('heart', '../src/assets/heart.png');
+    this.load.image('heart', '../src/assets/food.png');
 
     this.load.image('bomb', '../src/assets/bomb.png');
-    this.load.spritesheet('dude', '../src/assets/characters.png', {
+    this.load.spritesheet('dude', '../src/assets/chicken.png', {
       frameWidth: 32,
       frameHeight: 32,
-      startFrame: 20,
-      endFrame: 40
+
     });
   }
 

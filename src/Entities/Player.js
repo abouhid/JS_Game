@@ -12,8 +12,8 @@ export default class Player extends Entity {
     this.scene.anims.create({
       key: 'left',
       frames: this.scene.anims.generateFrameNumbers('dude', {
-        start: 0,
-        end: 4,
+        start: 9,
+        end: 11,
       }),
       frameRate: 10,
       repeat: -1,
@@ -24,8 +24,8 @@ export default class Player extends Entity {
       key: 'turn',
       frames: this.scene.anims.generateFrameNumbers('dude',
         {
-          start: 0,
-          end: 16,
+          start: 6,
+          end: 8,
         }),
       frameRate: 10,
       repeat: -1,
@@ -35,12 +35,23 @@ export default class Player extends Entity {
     this.scene.anims.create({
       key: 'right',
       frames: this.scene.anims.generateFrameNumbers('dude', {
-        start: 8,
-        end: 15,
+        start: 3,
+        end: 5,
       }),
       frameRate: 10,
       repeat: -1,
     });
+
+    this.scene.anims.create({
+      key: 'jump',
+      frames: this.scene.anims.generateFrameNumbers('dude', {
+        start: 0,
+        end: 2,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
 
 
     this.key_W = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -64,14 +75,19 @@ export default class Player extends Entity {
       this.anims.play('right', true);
     } else {
       this.body.setVelocityX(0);
-
+      if (this.body.touching.down) {
       this.anims.play('turn');
+      }else {
+        this.anims.play('jump');
+
+      }
     }
 
     if (jumped || jumpedW) {
       if (this.body.touching.down) {
         this.canJump = true;
         this.body.setVelocityY(-380);
+
       } else if (this.canJump) {
         this.canJump = false;
         this.body.setVelocityY(-380);
