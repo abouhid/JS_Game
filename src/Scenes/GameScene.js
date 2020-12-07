@@ -14,7 +14,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', '../src/assets/bg.png');
+    this.load.image('sky', '../src/assets/farm.jpg');
     this.load.image('ground', '../src/assets/platform.png');
     this.load.image('platform', '../src/assets/plattexture.png');
 
@@ -46,7 +46,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.bg_1 = this.add.tileSprite(0, 0, config.width, config.height, 'sky');
+    this.bg_1 = this.add.image(-100, -100, 'sky')
+    this.bg_1.setScale(2)
     this.bg_1.setOrigin(0);
     this.bg_1.setScrollFactor(0);
 
@@ -59,10 +60,6 @@ export default class GameScene extends Phaser.Scene {
     this.enemy = new Enemy(this, 0, 2000, 'chick');
 
     this.numEnemies = 0;
-
-    // ground = this.physics.add.staticGroup();
-    // ground.create(400, game.config.height, 'platform').setScale(4).refreshBody();
-
     this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.player, this.platformGroup);
     this.physics.add.collider(this.item.coins, this.ground);
@@ -72,11 +69,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.score = this.add.text(630, 50, `Coins: ${this.coinScore}`, {
       fontSize: '20px',
-      fill: '#ffffff',
+      fill: 'black',
     });
     this.health = this.add.text(50, 50, `Health: ${this.player.health}`, {
       fontSize: '20px',
-      fill: '#ffffff',
+      fill: 'black',
     });
 
     this.score.setScrollFactor(0);
