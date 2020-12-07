@@ -1,17 +1,12 @@
-manage to create random platforms
-make them go down and start again
-camera move when certain y is reached 
 
-
-
-REMEMBER TO CHANGE NAMES (github and base.js)
+mudar nomes (github and base.js)
 
 amanhã:
 
-tentar colocar estrelas em cima de plataformas
-adicionar inimigos
-diminuir health
-criar level 2
+game over display score
+animations
+API
+CREATE CHOOSE PLAYER AND CHOOSE DIFFICULTY
 
 Copyright/Attribution Notice: 
 Credit DanSevenStar.xyz
