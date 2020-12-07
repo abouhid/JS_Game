@@ -5,57 +5,54 @@ import Entity from './Entity';
 export default class Item extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'item');
-   
+
+    this.gameOptions = {
+      intervalX: [(game.config.width * 0.2), (game.config.width * 0.8)],
+      intervalY: [(game.config.height * 2 / 3) - 1 * (game.config.height / 3) * (this.scene.numPlat), (game.config.height * 1.8) / 3],
+    };
+
     this.scene.anims.create({
       key: 'spin',
       frames: this.scene.anims.generateFrameNumbers('coin', { start: 0, end: 6 }),
       frameRate: 10,
-      repeat: -1
-  });
-  this.scene.anims.create({
-    key: 'orbs',
-    frames: this.scene.anims.generateFrameNumbers('orbs', { start: 0, end: 3 }),
-    frameRate: 10,
-    repeat: -1
-});
-  
+      repeat: -1,
+    });
+    this.scene.anims.create({
+      key: 'orbs',
+      frames: this.scene.anims.generateFrameNumbers('orbs', { start: 0, end: 3 }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
     this.coins = this.scene.physics.add.group();
 
-  this.orbs = this.scene.physics.add.group();
-  this.foods = this.scene.physics.add.group();
-  
-    this.createCoin()
-    for (let i = 0; i < this.scene.numPlat/2; i++) {
-    this.createOrb()
+    this.orbs = this.scene.physics.add.group();
+    this.foods = this.scene.physics.add.group();
+
+    this.createCoin();
+    for (let i = 0; i < this.scene.numPlat / 2; i++) {
+      this.createOrb();
     }
-    this.createFood()
-    
- 
+    this.createFood();
   }
 
   createOrb() {
-    const gameOptions = {
-      intervalX: [(game.config.width * 0.2), (game.config.width * 0.8)],
-      intervalY: [(game.config.height * 2 / 3) - 1 * (game.config.height / 3) * (this.scene.numPlat), (game.config.height * 1.8) / 3],
-      repeat: [-8, 2],
-    };
-      // this.star = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'star');
+    // this.star = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'star');
 
-      this.orb = this.scene.add.sprite(Phaser.Math.Between(gameOptions.intervalX[0], gameOptions.intervalX[1]),
-        Phaser.Math.Between(gameOptions.intervalY[0], gameOptions.intervalY[1]), 'orbs');
-      this.orbs.add(this.orb);
-      this.orbs.children.iterate(orb => {
-        orb.play('orbs')
-        // orb.setScale(1);
-      })
-    
+    this.orb = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0], this.gameOptions.intervalX[1]),
+      Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), 'orbs');
+    this.orbs.add(this.orb);
+    this.orbs.children.iterate(orb => {
+      orb.play('orbs');
+      // orb.setScale(1);
+    });
   }
 
   createFood() {
-    let healthItem = ['food','egg' ]
-    this.food = this.scene.add.sprite(300,300, (healthItem[Math.round(Math.random())]));
+    const healthItem = ['food', 'egg'];
+    this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0], this.gameOptions.intervalX[1]),
+      Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), (healthItem[Math.round(Math.random())]));
     this.foods.add(this.food);
-
   }
 
   createCoin() {
@@ -68,11 +65,10 @@ export default class Item extends Entity {
       this.coin.body.setGravityY(500);
       this.coin.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
       this.coins.children.iterate(coin => {
-        coin.play('spin')
+        coin.play('spin');
         coin.setScale(0.7);
-      })
+      });
     }
-
   }
 
   update() {

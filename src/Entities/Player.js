@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Entity from './Entity';
 
-
 export default class Player extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Player');
@@ -19,18 +18,16 @@ export default class Player extends Entity {
       repeat: -1,
     });
 
-
     this.scene.anims.create({
       key: 'turn',
       frames: this.scene.anims.generateFrameNumbers('dude',
         {
-          start: 6,
+          start: 7,
           end: 8,
         }),
       frameRate: 10,
       repeat: -1,
     });
-
 
     this.scene.anims.create({
       key: 'right',
@@ -42,23 +39,10 @@ export default class Player extends Entity {
       repeat: -1,
     });
 
-    this.scene.anims.create({
-      key: 'jump',
-      frames: this.scene.anims.generateFrameNumbers('dude', {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-
-
     this.key_W = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     this.key_A = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     this.key_S = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     this.key_D = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.body.setBounce(0.1);
     this.body.setGravityY(500);
   }
 
@@ -76,10 +60,7 @@ export default class Player extends Entity {
     } else {
       this.body.setVelocityX(0);
       if (this.body.touching.down) {
-      this.anims.play('turn');
-      }else {
-        this.anims.play('jump');
-
+        this.anims.play('turn');
       }
     }
 
@@ -87,7 +68,6 @@ export default class Player extends Entity {
       if (this.body.touching.down) {
         this.canJump = true;
         this.body.setVelocityY(-380);
-
       } else if (this.canJump) {
         this.canJump = false;
         this.body.setVelocityY(-380);

@@ -11,10 +11,6 @@ const gameOptions = {
   spawnRange: [100, 700],
 
   platformSizeRange: [100, 500],
-
-  platformVerticalLimit: [0.8, 1.4],
-
-  platformHeightRange: [-5, 5],
 };
 let i = 0;
 export default class Platform extends Entity {
@@ -46,6 +42,17 @@ export default class Platform extends Entity {
         times(x - 1)(f);
       }
     };
+
+    this.scene.ground = this.scene.add.tileSprite(game.config.width/2,
+      game.config.height+100,
+      game.config.width,
+      32,
+      'platform',
+    );
+    this.scene.physics.add.existing(this.scene.ground);
+    this.scene.ground.body.setImmovable(true);
+    this.scene.ground.displayHeight = 300
+
 
     times(this.scene.numPlat)(() => {
       this.addPlatform(
@@ -81,17 +88,13 @@ export default class Platform extends Entity {
         gameOptions.platformSpeedRange[1],
       ) * -1,
     );
-    // console.log(i)
     this.scene.platformGroup.add(platform);
-    // console.log(this.scene.platformGroup.children.entries[i].y)
     i++;
     this.scene.time.addEvent({
       delay: 500,
       callback() {
         const velocity = Phaser.Math.FloatBetween(gameOptions.platformSpeedRange[0],
           gameOptions.platformSpeedRange[1]);
-
-        // console.log(this.scene.item.coins.children.entries[0].x)
         if (platform.x < 0) {
           platform.body.setVelocityX(velocity);
         }
@@ -102,6 +105,5 @@ export default class Platform extends Entity {
       callbackScope: this,
       loop: true,
     });
-    
   }
 }

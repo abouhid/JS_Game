@@ -22,25 +22,22 @@ export default class GameScene extends Phaser.Scene {
       frameWidth: 40,
       frameHeight: 44,
       startFrame: 0,
-      endFrame: 3
+      endFrame: 3,
     });
     this.load.spritesheet('orbs', '../src/assets/orbs.png', {
       frameWidth: 32,
       frameHeight: 32,
       startFrame: 5,
-      endFrame: 9
+      endFrame: 9,
     });
-    this.load.spritesheet('explosion', '../src/assets/explosion3.png', {
-      frameWidth: 90,
-      frameHeight: 90,
-      startFrame: 0,
-      endFrame: 9
+    this.load.spritesheet('chick', '../src/assets/chick.png', {
+      frameWidth: 24,
+      frameHeight: 24,
     });
     this.load.image('star', '../src/assets/star.png');
     this.load.image('food', '../src/assets/food.png');
     this.load.image('egg', '../src/assets/egg.png');
 
-    this.load.image('bomb', '../src/assets/bomb.png');
     this.load.spritesheet('dude', '../src/assets/chicken.png', {
       frameWidth: 32,
       frameHeight: 32,
@@ -59,16 +56,16 @@ export default class GameScene extends Phaser.Scene {
 
     this.platforms = new Platform(this, 0, 2000, 'platform');
     this.item = new Item(this, 0, 2000, 'star');
-    this.enemy = new Enemy(this, 0, 2000, 'bomb');
+    this.enemy = new Enemy(this, 0, 2000, 'chick');
 
     this.numEnemies = 0;
 
-    ground = this.physics.add.staticGroup();
-    ground.create(400, game.config.height, 'ground').setScale(4).refreshBody();
+    // ground = this.physics.add.staticGroup();
+    // ground.create(400, game.config.height, 'platform').setScale(4).refreshBody();
 
-    this.physics.add.collider(this.player, ground);
+    this.physics.add.collider(this.player, this.ground);
     this.physics.add.collider(this.player, this.platformGroup);
-    this.physics.add.collider(this.item.coins, ground);
+    this.physics.add.collider(this.item.coins, this.ground);
     this.physics.add.collider(this.item.coins, this.platformGroup);
 
     this.coinScore = 0;
@@ -90,7 +87,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.item.foods, this.collectFood, null, this);
 
     this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);
-
+    this.enemy.createEnemy();
   }
 
   collectOrb(player, orb) {
@@ -103,14 +100,14 @@ export default class GameScene extends Phaser.Scene {
     coin.destroy(coin.x, coin.y);
     this.coinScore++;
 
-    this.numEnemies++
+    this.numEnemies++;
     this.score.setText(`Coins: ${this.coinScore}`);
 
     if (this.item.coins.children.entries.length === 0) {
-      this.enemy.createEnemy()
-      this.item.createOrb()
-      this.item.createCoin()
-      this.item.createFood()
+      this.enemy.createEnemy();
+      this.item.createOrb();
+      this.item.createCoin();
+      this.item.createFood();
     }
   }
 
@@ -119,19 +116,18 @@ export default class GameScene extends Phaser.Scene {
     this.player.health += 20;
     food.destroy(food.x, food.y);
     this.health.setText(`Health: ${this.player.health}`);
-
   }
 
   hit(player, baddie) {
     this.player.body.setVelocityY(380);
     this.cameras.main.flash();
-    this.player.health -= 150;
+    this.player.health -= 40;
     baddie.destroy(baddie.x, baddie.y);
 
     this.health.setText(`Health: ${this.player.health}`);
 
     if (this.player.health <= 0) {
-      this.gameOver()
+      this.gameOver();
     }
   }
 
@@ -160,7 +156,6 @@ export default class GameScene extends Phaser.Scene {
       delay: 1500,
       callback() {
         self.scene.start('GameOver');
-
       },
     });
   }
