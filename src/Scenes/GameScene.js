@@ -18,7 +18,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('ground', '../src/assets/platform.png');
     this.load.image('platform', '../src/assets/plattexture.png');
 
-    this.load.image('coin', '../src/assets/coin_gold.png', {
+    this.load.image('coin', '../src/assets/coin.png', {
       frameWidth: 20,
       frameHeight: 20,
     });
@@ -102,12 +102,17 @@ export default class GameScene extends Phaser.Scene {
     this.score.setScrollFactor(0);
     this.health.setScrollFactor(0);
 
+    this.physics.add.overlap(this.player, this.item.stars, this.collectStar, null, this);
     this.physics.add.overlap(this.player, this.item.coins, this.collectCoin, null, this);
     this.physics.add.overlap(this.player, this.enemy.coins, this.hit, null, this);
   }
 
-  collectCoin(player, coin) {
+  collectStar(player, star) {
     this.player.body.setVelocityY(-380);
+    star.destroy(star.x, star.y);
+    this.player.canJump = true;
+  }
+  collectCoin(player, coin) {
     coin.destroy(coin.x, coin.y);
     this.coinScore++;
     this.player.canJump = true;

@@ -7,7 +7,7 @@ export default class GameOver extends Phaser.Scene {
   }
 
   create() {
-    console.log(game);
+
     this.cameras.main.fadeIn(1000);
     this.died = this.add.text(game.config.width / 3, game.config.height / 2 - 200,
       'You died!', { fontSize: '32px', fill: '#fff' });

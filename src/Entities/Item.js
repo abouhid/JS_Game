@@ -13,9 +13,21 @@ export default class Item extends Entity {
       repeat: [-8, 2],
     };
 
-    this.body.setSize(28, 47);
-    this.body.setGravityY(800);
-    this.body.setBounceY(0.5);
+    this.scene.anims.create({
+      key: 'rotate',
+      frames: this.scene.anims.generateFrameNumbers('coin', {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 15,
+      yoyo: true,
+      repeat: -1,
+    });
+
+    // this.body.setSize(28, 47);
+    // this.body.setGravityY(800);
+    // this.body.setBounceY(0.5);
+    // this.body.anims.play('rotate');
 
     this.coins = this.scene.physics.add.group();
     this.stars = this.scene.physics.add.group();
@@ -25,17 +37,21 @@ export default class Item extends Entity {
       // console.log(this.scene.platformGroup.children.entries[i].y)
 
       this.coin = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'coin');
-      this.star = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'star');
       this.coins.add(this.coin);
+
       this.coin.body.setSize(28, 47);
       this.coin.body.setGravityY(500);
       this.coin.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     }
 
     for (let i = 0; i < this.scene.numPlat; i++) {
-      this.coin = this.scene.add.sprite(Phaser.Math.Between(gameOptions.intervalX[0], gameOptions.intervalX[1]),
-        Phaser.Math.Between(gameOptions.intervalY[0], gameOptions.intervalY[1]), 'dude');
-      this.coins.add(this.coin);
+      // this.star = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'star');
+      
+      this.star = this.scene.add.sprite(Phaser.Math.Between(gameOptions.intervalX[0], gameOptions.intervalX[1]),
+        Phaser.Math.Between(gameOptions.intervalY[0], gameOptions.intervalY[1]), 'star');
+        this.stars.add(this.star);
+
+      this.stars.add(this.star);
     }
   }
 
