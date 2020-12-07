@@ -7,7 +7,7 @@ export default class Enemy extends Entity {
     super(scene, x, y, key, 'raffa');
     this.baddies = this.scene.physics.add.group();
     this.scene.anims.create({
-      key: 'raffa',
+      key: 'rasffa',
       frames: this.scene.anims.generateFrameNumbers('raffa', { start: 21, end: 23 }),
       frameRate: 10,
       repeat: -1,
