@@ -13,3 +13,5 @@ adicionar inimigos
 diminuir health
 criar level 2
 
+Copyright/Attribution Notice: 
+Credit DanSevenStar.xyz

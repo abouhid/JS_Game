@@ -23,6 +23,7 @@ export default class GameScene extends Phaser.Scene {
       frameHeight: 20,
     });
     this.load.image('star', '../src/assets/star.png');
+    this.load.image('heart', '../src/assets/heart.png');
 
     this.load.image('bomb', '../src/assets/bomb.png');
     this.load.spritesheet('dude', '../src/assets/characters.png', {
@@ -36,53 +37,18 @@ export default class GameScene extends Phaser.Scene {
     this.bg_1.setOrigin(0);
     this.bg_1.setScrollFactor(0);
 
-    this.player = new Player(
-      this,
-      game.config.width / 2,
-      game.config.height - 120,
-      'dude',
-    );
+    this.player = new Player(this, game.config.width / 2, game.config.height - 120, 'dude');
 
     this.player.setScale(2);
 
-    this.platforms = new Platform(
-      this,
-      0,
-      2000,
-      'platform',
-    );
-    this.item = new Item(
-      this,
-      0,
-      2000,
-      'star',
-    );
-    this.enemy = new Enemy(
-      this,
-      0,
-      2000,
-      'bomb',
-    );
-    console.log(this.item.coins);
-    // this.coins.anims.create({
-    //   key: "rotate",
-    //   frames: this.coins.anims.generateFrameNumbers("item", {
-    //       start: 0,
-    //       end: 5
-    //   }),
-    //   frameRate: 15,
-    //   yoyo: true,
-    //   repeat: -1
-    //   });
-    //   this.coin.anims.play("rotate");
+    this.platforms = new Platform(this, 0, 2000, 'platform');
+    this.item = new Item(this, 0, 2000, 'star');
+    this.enemy = new Enemy(this, 0, 2000, 'bomb');
 
+    this.numEnemies = 0;
 
     ground = this.physics.add.staticGroup();
-
-    ground
-      .create(400, game.config.height, 'ground')
-      .setScale(4)
-      .refreshBody();
+    ground.create(400, game.config.height, 'ground').setScale(4).refreshBody();
 
     this.physics.add.collider(this.player, ground);
     this.physics.add.collider(this.player, this.platformGroup);
@@ -104,7 +70,9 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.item.stars, this.collectStar, null, this);
     this.physics.add.overlap(this.player, this.item.coins, this.collectCoin, null, this);
-    this.physics.add.overlap(this.player, this.enemy.coins, this.hit, null, this);
+    this.physics.add.overlap(this.player, this.item.hearts, this.collectHeart, null, this);
+
+    this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);
   }
 
   collectStar(player, star) {
@@ -112,19 +80,39 @@ export default class GameScene extends Phaser.Scene {
     star.destroy(star.x, star.y);
     this.player.canJump = true;
   }
+
   collectCoin(player, coin) {
     coin.destroy(coin.x, coin.y);
     this.coinScore++;
     this.player.canJump = true;
 
+    this.numEnemies++
+    this.enemy.createEnemy()
+
     this.score.setText(`Coins: ${this.coinScore}`);
+
+    // console.log(this.item.coins.children.entries.length)
+    if (this.item.coins.children.entries.length===0) {
+      this.item.createCoin()
+    }
+
+  }
+  
+  collectHeart(player, heart) {
+    console.log('aa')
+    this.cameras.main.flash();
+    this.player.health += 20;
+    heart.destroy(heart.x, heart.y);
+    this.health.setText(`Health: ${this.player.health}`);
+
   }
 
-  hit(player, coin) {
+  hit(player, baddie) {
     this.player.body.setVelocityY(380);
     this.cameras.main.flash();
-    coin.destroy(coin.x, coin.y);
-    this.player.health -= 100;
+    this.player.health -= 20;
+    baddie.destroy(baddie.x, baddie.y);
+
     this.health.setText(`Health: ${this.player.health}`);
     if (this.player.health <= 0) {
       this.cameras.main.once('camerafadeincomplete', (camera) => {
@@ -151,6 +139,7 @@ export default class GameScene extends Phaser.Scene {
     this.resize();
     this.player.movements();
     this.player.update();
+    this.enemy.update();
     this.item.update();
     this.bg_1.tilePositionY = this.scrollY;
   }

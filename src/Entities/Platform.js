@@ -4,7 +4,7 @@ import Entity from './Entity';
 
 const gameOptions = {
 
-  numPlat: 4,
+  numPlat: 2,
 
   platformSpeedRange: [200, 500],
 
@@ -23,7 +23,6 @@ export default class Platform extends Entity {
     this.visible = false;
 
     this.scene.numPlat = gameOptions.numPlat;
-
 
     this.scene.platformGroup = this.scene.add.group({
       removeCallback(platform) {
@@ -103,5 +102,6 @@ export default class Platform extends Entity {
       callbackScope: this,
       loop: true,
     });
+    
   }
 }
