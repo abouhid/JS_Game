@@ -1,17 +1,18 @@
+/* eslint-disable no-undef */
 import 'phaser';
 
-export default {
+const config = {
   type: Phaser.AUTO,
-  parent: 'phaser-example',
   width: 800,
   height: 600,
-  dom: {
-    createContainer: true
-  },
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true
+      debug: false,
+      gravity: { y: 0 },
+
     },
   },
 };
+
+export default config;

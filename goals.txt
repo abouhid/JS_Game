@@ -1,0 +1,24 @@
+
+mudar nomes (github and base.js)
+
+
+
+game over display score
+animations
+API
+choose number of platforms
+
+
+
+
+
+Copyright/Attribution Notice: 
+Credit DanSevenStar.xyz
+https://twitter.com/Shepardskin
+
+Instructions Scene
+background
+explosion animation
+HONK HONK HONK 
+
+monkey sounds

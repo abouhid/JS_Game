@@ -1,194 +1,176 @@
-import "phaser";
-import config from "../Config/config";
+import Phaser from 'phaser';
 
-let platforms, stars, bombs, player, cursors;
+import config from '../Config/config';
+import Player from '../Entities/Player';
+import Platform from '../Entities/Platform';
+import Item from '../Entities/Item';
+import Enemy from '../Entities/Enemy';
 
-let gameOptions = {
-  // platform speed range, in pixels per second
-  platformSpeedRange: [300, 300],
-  // spawn range, how far should be the rightmost platform from the right edge
-  // before next platform spawns, in pixels
-  spawnRange: [80, 300],
+let ground;
 
-  // platform width range, in pixels
-  platformSizeRange: [90, 300],
-
-  // a height range between rightmost platform and next platform to be spawned
-  platformHeightRange: [-5, 5],
-};
 export default class GameScene extends Phaser.Scene {
   constructor() {
-    super("Game");
-    
+    super('Game');
   }
+
   preload() {
-    
-    this.load.image("sky", "../src/assets/sky.png");
-    this.load.image("ground", "../src/assets/platform.png");
-    this.load.image("star", "../src/assets/star.png");
-    this.load.image("bomb", "../src/assets/bomb.png");
-    this.load.spritesheet("dude", "../src/assets/dude.png", {
+    this.load.image('sky', '../src/assets/jungle.jpg');
+    this.load.image('ground', '../src/assets/platform.png');
+    this.load.image('platform', '../src/assets/plattexture.png');
+
+    this.load.spritesheet('banana', '../src/assets/banana.png', {
+      frameWidth: 31,
+      frameHeight: 58
+    });
+    this.load.spritesheet('orbs', '../src/assets/orbs.png', {
       frameWidth: 32,
-      frameHeight: 48,
+      frameHeight: 32,
+      startFrame: 5,
+      endFrame: 9,
     });
-    this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-    this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    this.key_S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-    this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.resize()
+    this.load.spritesheet('raffa', '../src/assets/monk.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+  
+    this.load.image('star', '../src/assets/star.png');
+    this.load.image('food', '../src/assets/food.png');
+    this.load.image('heart', '../src/assets/heart.png');
+    this.load.image('pizza', '../src/assets/pizza.png');
 
+    this.load.image('beer', '../src/assets/beer.png');
+
+    this.load.spritesheet('dude', '../src/assets/monk.png', {
+      frameWidth: 32,
+      frameHeight: 32.5,
+    });
   }
+
   create() {
-    this.add.image(config.width / 2, config.height / 2, "sky");
+    this.bg_1 = this.add.image(-100, -100, 'sky')
+    this.bg_1.setScale(0.5)
 
-    platforms = this.physics.add.staticGroup();
+    this.bg_1.setOrigin(0);
+    this.bg_1.setScrollFactor(0);
 
-     // group with all active platforms.
-     this.platformGroup = this.add.group({
+    this.player = new Player(this, game.config.width / 2, game.config.height - 120, 'dude');
 
-      // once a platform is removed, it's added to the pool
-      removeCallback: function(platform){
-          platform.scene.platformPool.add(platform)
-      }
-  });
+    this.player.setScale(2);
 
-  // platform pool
-  this.platformPool = this.add.group({
+    this.platforms = new Platform(this, 0, 2000, 'platform');
+    this.item = new Item(this, 0, 2000, 'star');
+    this.enemy = new Enemy(this, 0, 2000, 'raffa');
 
-      // once a platform is removed from the pool, it's added to the active platforms group
-      removeCallback: function(platform){
-          platform.scene.platformGroup.add(platform)
-      }
-  });
+    this.numEnemies = 0;
+    this.physics.add.collider(this.player, this.ground);
+    this.physics.add.collider(this.player, this.platformGroup);
+    this.physics.add.collider(this.item.bananas, this.ground);
+    this.physics.add.collider(this.item.bananas, this.platformGroup);
 
-  this.addPlatform(0,0,0)
+    this.bananaScore = 0;
 
-
-    platforms.create(400, 568, "ground").setScale(2).refreshBody();
-
-    platforms.create(600, 400, "ground");
-    // platforms.create(50, 250, 'ground');
-    // platforms.create(750, 220, 'ground');
-
-    player = this.physics.add.sprite(100, 0, "dude");
-
-    player.setBounce(0.1);
-
-    player.setCollideWorldBounds(true);
-    player.body.setGravityY(500);
-    this.physics.add.collider(player, platforms);
-
-    this.anims.create({
-      key: "left",
-      frames: this.anims.generateFrameNumbers("dude", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 10,
-      repeat: -1,
+    this.score = this.add.text(630, 50, `Bananas: ${this.bananaScore}`, {
+      fontSize: '20px',
+      fill: 'black',
+    });
+    this.health = this.add.text(50, 50, `Health: ${this.player.health}`, {
+      fontSize: '20px',
+      fill: 'black',
     });
 
-    this.anims.create({
-      key: "turn",
-      frames: [
-        {
-          key: "dude",
-          frame: 4,
-        },
-      ],
-      frameRate: 20,
-    });
+    this.score.setScrollFactor(0);
+    this.health.setScrollFactor(0);
 
-    this.anims.create({
-      key: "right",
-      frames: this.anims.generateFrameNumbers("dude", {
-        start: 5,
-        end: 8,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
+    this.physics.add.overlap(this.player, this.item.orbs, this.collectOrb, null, this);
+    this.physics.add.overlap(this.player, this.item.bananas, this.collectBanana, null, this);
+    this.physics.add.overlap(this.player, this.item.foods, this.collectFood, null, this);
+
+    this.physics.add.overlap(this.player, this.enemy.baddies, this.hit, null, this);
+    this.enemy.createEnemy();
   }
 
-  addPlatform(platformWidth, posX, posY) {
-    // this.addedPlatforms++;
-    // let platform;
-    // if (this.platformPool.getLength()) {
-    //   platform = this.platformPool.getFirst();
-    //   platform.x = posX;
-    //   platform.y = posY;
-    //   platform.active = true;
-    //   platform.visible = true;
-    //   this.platformPool.remove(platform);
-    //   let newRatio = platformWidth / platform.displayWidth;
-    //   platform.displayWidth = platformWidth;
-    //   platform.tileScaleX = 1 / platform.scaleX;
-    // } else {
-    //   platform = this.add.tileSprite(posX, posY, platformWidth, 32, "platform");
-    //   this.physics.add.existing(platform);
-    //   platform.body.setImmovable(true);
-    //   platform.body.setVelocityX(
-    //     Phaser.Math.Between(
-    //       gameOptions.platformSpeedRange[0],
-    //       gameOptions.platformSpeedRange[1]
-    //     ) * -1
-    //   );
-    //   platform.setDepth(2);
-    //   this.platformGroup.add(platform);
-    // }
-    // this.nextPlatformDistance = Phaser.Math.Between(
-    //   gameOptions.spawnRange[0],
-    //   gameOptions.spawnRange[1]
-    // );
-    console.log('aaa')
+  collectOrb(player, orb) {
+    this.player.body.setVelocityY(-380);
+    orb.destroy(orb.x, orb.y);
+    this.player.canJump = true;
+  }
 
+  collectBanana(player, banana) {
+    banana.destroy(banana.x, banana.y);
+    this.bananaScore++;
+
+    this.numEnemies++;
+    this.score.setText(`Bananas: ${this.bananaScore}`);
+
+    if (this.item.bananas.children.entries.length === 0) {
+      this.enemy.createEnemy();
+      this.item.createOrb();
+      this.item.createBanana();
+      this.item.createFood();
+    }
+  }
+
+  collectFood(player, food) {
+    this.cameras.main.flash();
+    this.player.health += 20;
+    food.destroy(food.x, food.y);
+    this.health.setText(`Health: ${this.player.health}`);
+  }
+
+  hit(player, baddie) {
+    this.player.body.setVelocityY(380);
+    this.cameras.main.flash();
+    this.player.health -= 40;
+    baddie.destroy(baddie.x, baddie.y);
+
+    this.health.setText(`Health: ${this.player.health}`);
+
+    if (this.player.health <= 0) {
+      this.gameOver();
+    }
   }
 
   update() {
-    cursors = this.input.keyboard.createCursorKeys();
-
-    const jumped = Phaser.Input.Keyboard.JustDown(cursors.up);
-    const jumpedW = Phaser.Input.Keyboard.JustDown(this.key_W);
-
-    if (cursors.left.isDown || this.key_A.isDown) {
-      player.setVelocityX(-200);
-
-      player.anims.play("left", true);
-    } else if (cursors.right.isDown || this.key_D.isDown) {
-      player.setVelocityX(200);
-
-      player.anims.play("right", true);
-    } else {
-      player.setVelocityX(0);
-
-      player.anims.play("turn");
-    }
-
-    if (jumped || jumpedW) {
-      if (player.body.touching.down) {
-        this.canJump = true;
-        player.setVelocityY(-380);
-      } else if (this.canJump) {
-        this.canJump = false;
-        player.setVelocityY(-380);
-      }
-    }
+    this.resize();
+    this.player.movements();
+    this.player.update();
+    this.enemy.update();
+    this.item.update();
+    this.bg_1.tilePositionY = this.scrollY;
   }
 
-  resize(){
-    let canvas = document.querySelector("canvas");
-    let windowWidth = window.innerWidth;
-    let windowHeight = window.innerHeight;
-    let windowRatio = windowWidth / windowHeight;
-    let gameRatio = game.config.width / game.config.height;
-    if(windowRatio < gameRatio){
-        canvas.style.width = windowWidth + "px";
-        canvas.style.height = (windowWidth / gameRatio) + "px";
-    }
-    else{
-        canvas.style.width = (windowHeight * gameRatio) + "px";
-        canvas.style.height = windowHeight + "px";
-    }
-}
+  gameOver() {
+    this.cameras.main.once('camerafadeincomplete', (camera) => {
+      camera.fadeOut(4000);
+    });
+    this.player.setTint(0xff0000);
+    this.player.anims.play('turn');
+    this.physics.pause();
+    this.input.disabled = true;
+    this.cameras.main.fadeOut(1000);
 
+    const self = this;
+
+    this.time.addEvent({
+      delay: 1500,
+      callback() {
+        self.scene.start('GameOver');
+      },
+    });
+  }
+
+  resize() {
+    const canvas = document.querySelector('canvas');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const windowRatio = windowWidth / windowHeight;
+    const gameRatio = game.config.width / game.config.height;
+    if (windowRatio < gameRatio) {
+      canvas.style.width = `${windowWidth}px`;
+      canvas.style.height = `${windowWidth / gameRatio}px`;
+    } else {
+      canvas.style.width = `${windowHeight * gameRatio}px`;
+      canvas.style.height = `${windowHeight}px`;
+    }
+  }
 }
