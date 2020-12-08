@@ -8,6 +8,9 @@ export default class OptionsScene extends Phaser.Scene {
   }
 
   create() {
+       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+
+
     this.model = this.sys.game.globals.model;
 
     this.text = this.add.text(300, 100, 'Options', { fontSize: 40 });

@@ -9,15 +9,18 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   create() {
-    this.creditsText = this.add.text(this.scene.game.config.width / 7,
-      this.scene.game.config.height / 2 - 200,
-      'Credits', { fontSize: '32px', fill: '#fff' });
-    this.madeByText = this.add.text(this.scene.game.config.width / 7,
-      this.scene.game.config.height / 2 - 100,
-      'Created By: Alexandre Bouhid', { fontSize: '32px', fill: '#fff' });
+       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
-    this.check = this.add.text(this.scene.game.config.width / 7, this.scene.game.config.height / 2,
-      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: '#fff' });
+
+    this.creditsText = this.add.text(this.game.config.width / 9,
+      this.game.config.height / 2 - 200,
+      'Credits', { fontSize: '32px', fill: 'black' });
+    this.madeByText = this.add.text(this.game.config.width / 9,
+      this.game.config.height / 2 - 100,
+      'Created By: Alexandre Bouhid', { fontSize: '32px', fill: 'black' });
+
+    this.check = this.add.text(this.game.config.width / 9, this.game.config.height / 2,
+      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
   }
@@ -31,7 +34,7 @@ export default class CreditsScene extends Phaser.Scene {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
-    const gameRatio = this.scene.game.config.width / this.scene.game.config.height;
+    const gameRatio = this.game.config.width / this.game.config.height;
     if (windowRatio < gameRatio) {
       this.canvas.style.width = `${windowWidth}px`;
       this.canvas.style.height = `${windowWidth / gameRatio}px`;

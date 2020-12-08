@@ -13,7 +13,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.bg_1 = this.add.image(-100, -100, 'sky').setScale(0.5).setOrigin(0).setScrollFactor(0);
+       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+
     this.player = new Player(this, this.game.config.width / 2, this.game.config.height - 120, 'dude').setScale(2);
 
     this.platforms = new Platform(this, 0, 2000, 'platform');

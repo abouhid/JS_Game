@@ -89,12 +89,16 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.html('nameForm', '/src/Forms/NameForm.html');
 
     // gamescene
-    this.load.image('sky', '../src/assets/jungle.jpg');
+    this.load.image('farm', '../src/assets/farm.jpg');
     this.load.image('platform', '../src/assets/plattexture.png');
 
     this.load.spritesheet('banana', '../src/assets/banana.png', {
       frameWidth: 31,
       frameHeight: 58,
+    });
+    this.load.spritesheet('pierogi', '../src/assets/pierogi.png', {
+      frameWidth: 32,
+      frameHeight: 32
     });
     this.load.spritesheet('orbs', '../src/assets/orbs.png', {
       frameWidth: 32,
@@ -111,6 +115,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('pizza', '../src/assets/pizza.png');
 
     this.load.image('beer', '../src/assets/beer.png');
+    this.load.spritesheet('drink', '../src/assets/pierogi.jpg', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
 
     this.load.spritesheet('dude', '../src/assets/monk.png', {
       frameWidth: 32,
@@ -119,7 +127,7 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   ready() {
-    this.scene.start('Title');
+    this.scene.start('Instructions');
     this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');

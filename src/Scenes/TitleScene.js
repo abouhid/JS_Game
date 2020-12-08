@@ -9,8 +9,11 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
+       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+
+
     // Game
-    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 140, 'blueButton1', 'blueButton2', 'New Game', 'Game');
+    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 140, 'blueButton1', 'blueButton2', 'Start', 'Instructions');
 
     // Options
     this.optionsButton = new Button(this, config.width / 2, config.height / 2 - 70, 'blueButton1', 'blueButton2', 'Options', 'Options');
