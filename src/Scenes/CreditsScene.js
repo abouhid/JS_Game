@@ -9,7 +9,7 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   create() {
-       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+    this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
 
     this.creditsText = this.add.text(this.game.config.width / 9,

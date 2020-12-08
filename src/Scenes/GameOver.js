@@ -9,7 +9,7 @@ export default class GameOver extends Phaser.Scene {
   create() {
     this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
-    let video = this.add.video(0, 0,'gameover').setOrigin(0).setScrollFactor(0).setScale(2.5)
+    const video = this.add.video(0, 0, 'gameover').setOrigin(0).setScrollFactor(0).setScale(2.5);
 
     this.cameras.main.fadeIn(1000);
     this.died = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 200,
@@ -19,7 +19,7 @@ export default class GameOver extends Phaser.Scene {
 
     this.madeByText = this.add.text(this.game.config.width / 3, this.game.config.height / 2,
       'Insert your name:', { fontSize: '26px', fill: '#fff' });
-      video.play(true)
+    video.play(true);
   }
 
   update() {

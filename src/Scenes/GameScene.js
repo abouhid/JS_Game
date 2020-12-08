@@ -13,7 +13,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-       this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+    this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
     this.player = new Player(this, this.game.config.width / 2, this.game.config.height - 120, 'dude').setScale(2);
 
@@ -42,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
     this.score.setScrollFactor(0);
     this.health.setScrollFactor(0);
 
-    this.physics.add.overlap(this.player, this.item.orbs, this.collectOrb, null, this);
+    this.physics.add.overlap(this.player, this.item.pierogis, this.collectPierogi, null, this);
     this.physics.add.overlap(this.player, this.item.bananas, this.collectBanana, null, this);
     this.physics.add.overlap(this.player, this.item.foods, this.collectFood, null, this);
 
@@ -50,9 +50,9 @@ export default class GameScene extends Phaser.Scene {
     this.enemy.createEnemy();
   }
 
-  collectOrb(player, orb) {
+  collectPierogi(player, pierogi) {
     this.player.body.setVelocityY(-380);
-    orb.destroy(orb.x, orb.y);
+    pierogi.destroy(pierogi.x, pierogi.y);
     this.player.canJump = true;
   }
 
@@ -65,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.item.bananas.children.entries.length === 0) {
       this.enemy.createEnemy();
-      this.item.createOrb();
+      this.item.createPierogi();
       this.item.createBanana();
       this.item.createFood();
     }

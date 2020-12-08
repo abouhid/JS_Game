@@ -26,47 +26,46 @@ export default class Item extends Entity {
       repeat: -1,
     });
     this.scene.anims.create({
-      key: 'orbs',
-      frames: this.scene.anims.generateFrameNumbers('orbs', { start: 0, end: 3 }),
-      frameRate: 10,
+      key: 'pierogi',
+      frames: this.scene.anims.generateFrameNumbers('pierogi', { start: 57, end: 57 }),
+      frameRate: 5,
       repeat: -1,
     });
 
     this.bananas = this.scene.physics.add.group();
 
-    this.orbs = this.scene.physics.add.group();
+    this.pierogis = this.scene.physics.add.group();
     this.foods = this.scene.physics.add.group();
 
     this.createBanana();
     for (let i = 0; i < this.scene.numPlat / 2; i += 1) {
-      this.createOrb();
+      this.createPierogi();
     }
     this.createFood();
   }
 
-  createOrb() {
-    this.orb = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
+  createPierogi() {
+    this.pierogi = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
       this.gameOptions.intervalX[1]),
-    Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), 'orbs');
-    this.orbs.add(this.orb);
-    this.orbs.children.iterate(orb => {
-      orb.play('orbs');
+    Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), 'pierogi');
+    this.pierogis.add(this.pierogi);
+    this.pierogis.children.iterate(pierogi => {
+      pierogi.play('pierogi');
     });
   }
 
   createFood() {
-    const healthItem = ['beer', 'pizza', 'heart','drink'];
+    const healthItem = ['beer', 'pizza', 'heart', 'drink'];
     this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
       this.gameOptions.intervalX[1]),
     Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]),
-    (healthItem[Math.floor(Math.random()*healthItem.length)]));
-    console.log()
-    if(this.food.texture.key === 'drink') {
-    this.food.play('drink')
+    (healthItem[Math.floor(Math.random() * healthItem.length)]));
+    if (this.food.texture.key === 'drink') {
+      this.food.play('drink');
     }
-    if(this.food.texture.key === 'beer') {
-      this.food.setScale(2)
-      }
+    if (this.food.texture.key === 'beer') {
+      this.food.setScale(2);
+    }
     this.foods.add(this.food);
   }
 

@@ -98,14 +98,9 @@ export default class PreloaderScene extends Phaser.Scene {
     });
     this.load.spritesheet('pierogi', '../src/assets/pierogi.png', {
       frameWidth: 32,
-      frameHeight: 32
-    });
-    this.load.spritesheet('orbs', '../src/assets/orbs.png', {
-      frameWidth: 32,
       frameHeight: 32,
-      startFrame: 5,
-      endFrame: 9,
     });
+   
     this.load.spritesheet('raffa', '../src/assets/monk.png', {
       frameWidth: 32,
       frameHeight: 32,
@@ -125,8 +120,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameHeight: 32.5,
     });
 
-this.load.video('gameover','../src/assets/gameover.mp4')
-
+    this.load.video('gameover', '../src/assets/gameover.mp4');
   }
 
   ready() {
