@@ -10,16 +10,19 @@ export default class TitleScene extends Phaser.Scene {
 
   create() {
     // Game
-    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 100, 'blueButton1', 'blueButton2', 'New Game', 'Game');
+    this.gameButton = new Button(this, config.width / 2, config.height / 2 - 140, 'blueButton1', 'blueButton2', 'New Game', 'Game');
 
     // Options
-    this.optionsButton = new Button(this, config.width / 2, config.height / 2 - 35, 'blueButton1', 'blueButton2', 'Options', 'Options');
+    this.optionsButton = new Button(this, config.width / 2, config.height / 2 - 70, 'blueButton1', 'blueButton2', 'Options', 'Options');
+   
+    // Instructions
+    this.instructionsButton = new Button(this, config.width / 2, config.height / 2 , 'blueButton1', 'blueButton2', 'About', 'Instructions');
 
     // Credits
-    this.creditsButton = new Button(this, config.width / 2, config.height / 2 + 35, 'blueButton1', 'blueButton2', 'Credits', 'Credits');
+    this.creditsButton = new Button(this, config.width / 2, config.height / 2 + 70, 'blueButton1', 'blueButton2', 'Credits', 'Credits');
 
     // Input
-    this.InputButton = new Button(this, config.width / 2, config.height / 2 + 100, 'blueButton1', 'blueButton2', 'Submit Name', 'UserInput');
+    this.InputButton = new Button(this, config.width / 2, config.height / 2 + 140, 'blueButton1', 'blueButton2', 'Ranking', 'UserInput');
 
     this.model = this.sys.game.globals.model;
     if (this.model.musicOn === true && this.model.bgMusicPlaying === false) {

@@ -13,49 +13,9 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
   }
 
-  preload() {
-    this.load.image('sky', '../src/assets/jungle.jpg');
-    this.load.image('ground', '../src/assets/platform.png');
-    this.load.image('platform', '../src/assets/plattexture.png');
-
-    this.load.spritesheet('banana', '../src/assets/banana.png', {
-      frameWidth: 31,
-      frameHeight: 58
-    });
-    this.load.spritesheet('orbs', '../src/assets/orbs.png', {
-      frameWidth: 32,
-      frameHeight: 32,
-      startFrame: 5,
-      endFrame: 9,
-    });
-    this.load.spritesheet('raffa', '../src/assets/monk.png', {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
-  
-    this.load.image('star', '../src/assets/star.png');
-    this.load.image('food', '../src/assets/food.png');
-    this.load.image('heart', '../src/assets/heart.png');
-    this.load.image('pizza', '../src/assets/pizza.png');
-
-    this.load.image('beer', '../src/assets/beer.png');
-
-    this.load.spritesheet('dude', '../src/assets/monk.png', {
-      frameWidth: 32,
-      frameHeight: 32.5,
-    });
-  }
-
   create() {
-    this.bg_1 = this.add.image(-100, -100, 'sky')
-    this.bg_1.setScale(0.5)
-
-    this.bg_1.setOrigin(0);
-    this.bg_1.setScrollFactor(0);
-
-    this.player = new Player(this, game.config.width / 2, game.config.height - 120, 'dude');
-
-    this.player.setScale(2);
+    this.bg_1 = this.add.image(-100, -100, 'sky').setScale(0.5).setOrigin(0).setScrollFactor(0);
+    this.player = new Player(this, game.config.width / 2, game.config.height - 120, 'dude').setScale(2);
 
     this.platforms = new Platform(this, 0, 2000, 'platform');
     this.item = new Item(this, 0, 2000, 'star');
@@ -66,6 +26,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platformGroup);
     this.physics.add.collider(this.item.bananas, this.ground);
     this.physics.add.collider(this.item.bananas, this.platformGroup);
+   
 
     this.bananaScore = 0;
 
@@ -111,8 +72,16 @@ export default class GameScene extends Phaser.Scene {
   }
 
   collectFood(player, food) {
-    this.cameras.main.flash();
-    this.player.health += 20;
+      this.player.health += 20;
+    this.player.setTint(0x79D670)
+    const self = this;
+
+    this.time.addEvent({
+      delay: 200,
+      callback() {
+        self.player.setTint(0xFFFFFF)
+      },
+    });
     food.destroy(food.x, food.y);
     this.health.setText(`Health: ${this.player.health}`);
   }

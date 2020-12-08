@@ -34,7 +34,6 @@ export default class Item extends Entity {
       this.createOrb();
     }
     this.createFood();
-    this.food.setScale(1.5)
 
   }
 

@@ -87,6 +87,35 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // load html
     this.load.html('nameForm', '/src/Forms/NameForm.html');
+
+    // gamescene
+    this.load.image('sky', '../src/assets/jungle.jpg');
+    this.load.image('platform', '../src/assets/plattexture.png');
+
+    this.load.spritesheet('banana', '../src/assets/banana.png', {
+      frameWidth: 31,
+      frameHeight: 58
+    });
+    this.load.spritesheet('orbs', '../src/assets/orbs.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+      startFrame: 5,
+      endFrame: 9,
+    });
+    this.load.spritesheet('raffa', '../src/assets/monk.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+  
+    this.load.image('heart', '../src/assets/heart.png');
+    this.load.image('pizza', '../src/assets/pizza.png');
+
+    this.load.image('beer', '../src/assets/beer.png');
+
+    this.load.spritesheet('dude', '../src/assets/monk.png', {
+      frameWidth: 32,
+      frameHeight: 32.5,
+    });
   }
 
   create() {
