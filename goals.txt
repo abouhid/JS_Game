@@ -1,25 +1,17 @@
 
 mudar nomes (github and base.js)
 
-
-
-game over display score
-animations
+WHATS LEFT
+game over
+ranking
+tests
+deploy
 API
-choose number of platforms
-
-PAREI PINTANDO DE VERDE QUANDO PEGAR ITEM
-ABOUT DEPOIS
 
 
 
 Copyright/Attribution Notice: 
 Credit DanSevenStar.xyz
 https://twitter.com/Shepardskin
-
-Instructions Scene
-background
-explosion animation
-HONK HONK HONK 
 
 monkey sounds

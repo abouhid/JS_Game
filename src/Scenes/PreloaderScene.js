@@ -80,7 +80,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // load assets needed in our game
     this.load.image('blueButton1', '/src/assets/ui/blue_button02.png');
     this.load.image('blueButton2', '/src/assets/ui/blue_button03.png');
-    this.load.image('phaserLogo', '/src/assets/logo.png');
+    this.load.image('logo', '/src/assets/logo.png');
     this.load.image('box', '/src/assets/ui/grey_box.png');
     this.load.image('checkedBox', '/src/assets/ui/blue_boxCheckmark.png');
     this.load.audio('bgMusic', ['/src/assets/TownTheme.mp3']);
@@ -100,7 +100,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-   
+
     this.load.spritesheet('raffa', '../src/assets/monk.png', {
       frameWidth: 32,
       frameHeight: 32,
@@ -124,7 +124,7 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   ready() {
-    this.scene.start('Game');
+    this.scene.start('Title');
     this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');

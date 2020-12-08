@@ -32,7 +32,7 @@ export default class Instructions extends Phaser.Scene {
     this.text3 = this.add.text(95, 220,
       'There are 8 platforms in which each one have a banana, \nonce you get all 8 bananas, the other ones will be reset', { fontSize: '18px', fill: 'black' });
     this.text4 = this.add.text(95, 275,
-      'Pierogis will push you up and give you and recharge your \nmidair jump', { fontSize: '18px', fill: 'black' });
+      'Pierogis will push you up and recharge your \nmidair jump', { fontSize: '18px', fill: 'black' });
 
     this.text5 = this.add.text(95, 330,
       'There are special items that will appear everytime you collect \nall bananas to heal you (yes, he likes drinking)', { fontSize: '18px', fill: 'black' });

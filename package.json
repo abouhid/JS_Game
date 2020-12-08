@@ -1,7 +1,7 @@
 {
-  "name": "js-shooter-game",
+  "name": "untitle-monkey-game",
   "version": "1.0.0",
-  "description": "This is my capstone assessment where I was tasked with building a shooter video game using Javascript and the game engine Phaser.",
+  "description": "alo alo",
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
@@ -23,7 +23,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Alexoid1",
+  "author": "abouhid",
   "license": "MIT",
   "licenseUrl": "",
   "homepage": "",
