@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Button from '../Objects/Button';
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
@@ -15,11 +16,14 @@ export default class GameOver extends Phaser.Scene {
     this.died = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 200,
       'You died!', { fontSize: '32px', fill: '#fff' });
     this.showScore = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 100,
-      `Score: ${this.bananaScore}`, { fontSize: '32px', fill: '#fff' });
+      `Score: ${this.sys.game.globals.bananaScore}`, { fontSize: '32px', fill: '#fff' });
 
     this.madeByText = this.add.text(this.game.config.width / 3, this.game.config.height / 2,
       'Insert your name:', { fontSize: '26px', fill: '#fff' });
     video.play(true);
+
+    this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+
   }
 
   update() {

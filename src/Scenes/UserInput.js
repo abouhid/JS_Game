@@ -6,6 +6,8 @@ import Button from '../Objects/Button';
 export default class UserInput extends Phaser.Scene {
   constructor() {
     super('UserInput');
+    this.game = window;
+
   }
 
   preload() {
@@ -13,6 +15,8 @@ export default class UserInput extends Phaser.Scene {
   }
 
   create() {
+    this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+
     this.name = this.add.text(50, 20, 'Your name', {
       font: '40px Arial',
       fill: '#ffffff',

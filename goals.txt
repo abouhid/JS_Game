@@ -2,6 +2,7 @@
 mudar nomes (github and base.js)
 
 WHATS LEFT
+music / sound effects
 game over
 ranking
 tests

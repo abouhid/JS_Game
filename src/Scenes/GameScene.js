@@ -27,10 +27,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.item.bananas, this.ground);
     this.physics.add.collider(this.item.bananas, this.platformGroup);
 
-
-    this.bananaScore = 0;
-
-    this.score = this.add.text(630, 50, `Bananas: ${this.bananaScore}`, {
+    this.score = this.add.text(630, 50, `Bananas: ${this.sys.game.globals.bananaScore}`, {
       fontSize: '20px',
       fill: 'black',
     });
@@ -58,10 +55,10 @@ export default class GameScene extends Phaser.Scene {
 
   collectBanana(player, banana) {
     banana.destroy(banana.x, banana.y);
-    this.bananaScore += 1;
+    this.sys.game.globals.bananaScore += 10;
 
     this.numEnemies += 1;
-    this.score.setText(`Bananas: ${this.bananaScore}`);
+    this.score.setText(`Bananas: ${this.sys.game.globals.bananaScore}`);
 
     if (this.item.bananas.children.entries.length === 0) {
       this.enemy.createEnemy();
@@ -72,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   collectFood(player, food) {
-    this.player.health += 20;
+    this.player.health += 10;
     this.player.setTint(0x79D670);
     const self = this;
 
@@ -89,7 +86,7 @@ export default class GameScene extends Phaser.Scene {
   hit(player, baddie) {
     this.player.body.setVelocityY(380);
     this.cameras.main.flash();
-    this.player.health -= 200;
+    this.player.health -= 40;
     baddie.destroy(baddie.x, baddie.y);
 
     this.health.setText(`Health: ${this.player.health}`);

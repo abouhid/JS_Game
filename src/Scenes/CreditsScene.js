@@ -12,15 +12,17 @@ export default class CreditsScene extends Phaser.Scene {
     this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
 
-    this.creditsText = this.add.text(this.game.config.width / 9,
-      this.game.config.height / 2 - 200,
-      'Credits', { fontSize: '32px', fill: 'black' });
-    this.madeByText = this.add.text(this.game.config.width / 9,
+    
+    this.text1 = this.add.text(this.game.config.width / 9,
       this.game.config.height / 2 - 100,
+      'Credits', { fontSize: '32px', fill: 'black' });
+    this.text2 = this.add.text(this.game.config.width / 9,
+      this.game.config.height / 2 - 50,
       'Created By: Alexandre Bouhid', { fontSize: '32px', fill: 'black' });
 
     this.check = this.add.text(this.game.config.width / 9, this.game.config.height / 2,
-      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });
+      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });      
+
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
   }
