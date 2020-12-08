@@ -89,7 +89,7 @@ export default class GameScene extends Phaser.Scene {
   hit(player, baddie) {
     this.player.body.setVelocityY(380);
     this.cameras.main.flash();
-    this.player.health -= 40;
+    this.player.health -= 200;
     baddie.destroy(baddie.x, baddie.y);
 
     this.health.setText(`Health: ${this.player.health}`);

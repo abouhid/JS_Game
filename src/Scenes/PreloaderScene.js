@@ -124,10 +124,13 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32.5,
     });
+
+this.load.video('gameover','../src/assets/gameover.mp4')
+
   }
 
   ready() {
-    this.scene.start('Instructions');
+    this.scene.start('Game');
     this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');

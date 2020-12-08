@@ -14,6 +14,12 @@ export default class Item extends Entity {
     };
 
     this.scene.anims.create({
+      key: 'drink',
+      frames: this.scene.anims.generateFrameNumbers('drink', { start: 98, end: 98 }),
+      frameRate: 5,
+      repeat: -1,
+    });
+    this.scene.anims.create({
       key: 'spin',
       frames: this.scene.anims.generateFrameNumbers('banana', { start: 5, end: 8 }),
       frameRate: 5,
@@ -49,11 +55,18 @@ export default class Item extends Entity {
   }
 
   createFood() {
-    const healthItem = ['pizza', 'heart', 'beer'];
+    const healthItem = ['beer', 'pizza', 'heart','drink'];
     this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
       this.gameOptions.intervalX[1]),
     Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]),
-    (healthItem[Math.round(Math.random())]));
+    (healthItem[Math.floor(Math.random()*healthItem.length)]));
+    console.log()
+    if(this.food.texture.key === 'drink') {
+    this.food.play('drink')
+    }
+    if(this.food.texture.key === 'beer') {
+      this.food.setScale(2)
+      }
     this.foods.add(this.food);
   }
 
