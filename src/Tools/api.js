@@ -21,7 +21,7 @@ const api = (() => {
   };
 
   const readScore = async () => {
-    const data = {method: 'GET'};
+    const data = { method: 'GET' };
     const resp = await fetch(api, data);
     const scores = await resp.json();
     return scores.result;

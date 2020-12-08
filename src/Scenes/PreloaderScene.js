@@ -107,6 +107,8 @@ export default class PreloaderScene extends Phaser.Scene {
     });
 
     this.load.image('heart', '../src/assets/heart.png');
+    this.load.image('frog', '../src/assets/frog.png');
+
     this.load.image('pizza', '../src/assets/pizza.png');
 
     this.load.image('beer', '../src/assets/beer.png');

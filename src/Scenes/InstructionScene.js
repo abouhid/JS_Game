@@ -12,7 +12,8 @@ export default class Instructions extends Phaser.Scene {
   create() {
 
     this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
-    this.add.image(400,60,'logo').setScale(0.25)
+    this.add.image(400, 60, 'logo').setScale(0.25);
+    this.add.image(150,500,'frog').setScale(0.5)
 
     this.player = new Player(this, 50, 120, 'dude').setScale(2);
     this.player.body.setGravityY(0);

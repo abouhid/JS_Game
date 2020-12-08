@@ -106,8 +106,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-
-
     this.cameras.main.once('camerafadeincomplete', (camera) => {
       camera.fadeOut(4000);
     });

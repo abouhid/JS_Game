@@ -12,7 +12,7 @@ export default class GameOver extends Phaser.Scene {
 
     const video = this.add.video(0, 0, 'gameover').setOrigin(0).setScrollFactor(0).setScale(2.5);
 
-    
+
     this.cameras.main.fadeIn(1000);
     this.died = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 200,
       'You died', { fontSize: '32px', fill: '#fff' });
@@ -23,7 +23,7 @@ export default class GameOver extends Phaser.Scene {
       'Insert your name to submit your score:', { fontSize: '26px', fill: '#fff' });
 
 
-     this.form = this.add.dom(400,400).createFromCache('nameForm');
+    this.form = this.add.dom(400, 400).createFromCache('nameForm');
 
     this.submitBtn = this.add.image(this.game.config.width / 2, (this.game.config.height / 2) + 100, 'blueButton1').setInteractive();
     this.submitBtn.on('pointerdown', () => {
@@ -35,7 +35,6 @@ export default class GameOver extends Phaser.Scene {
     // video.play(true);
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
-
   }
 
   update() {

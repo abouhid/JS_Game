@@ -4,7 +4,6 @@ import Button from '../Objects/Button';
 // import api from '../src/Tools/api.js';
 
 
-
 class Ranking extends Phaser.Scene {
   constructor() {
     super('Ranking');
@@ -12,6 +11,8 @@ class Ranking extends Phaser.Scene {
 
   create() {
     this.menuButton = new Button(this, 500, 550, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+        this.add.image(150,500,'frog').setScale(0.5)
+
 
     const loadMessage = this.add.text(100, 100, 'Fetching highest scores...', { fontSize: '32px', fill: '#fff' });
     api.readScore().then((scores) => {

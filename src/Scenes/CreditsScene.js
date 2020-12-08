@@ -10,9 +10,9 @@ export default class CreditsScene extends Phaser.Scene {
 
   create() {
     this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
+    this.add.image(150,500,'frog').setScale(0.5)
 
 
-    
     this.text1 = this.add.text(this.game.config.width / 9,
       this.game.config.height / 2 - 100,
       'Credits', { fontSize: '32px', fill: 'black' });
@@ -21,7 +21,7 @@ export default class CreditsScene extends Phaser.Scene {
       'Created By: Alexandre Bouhid', { fontSize: '32px', fill: 'black' });
 
     this.check = this.add.text(this.game.config.width / 9, this.game.config.height / 2,
-      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });      
+      'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });
 
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
