@@ -5,6 +5,9 @@ const config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  dom: {
+    createContainer: true
+  },
   physics: {
     default: 'arcade',
     arcade: {

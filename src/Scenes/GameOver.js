@@ -12,15 +12,27 @@ export default class GameOver extends Phaser.Scene {
 
     const video = this.add.video(0, 0, 'gameover').setOrigin(0).setScrollFactor(0).setScale(2.5);
 
+    
     this.cameras.main.fadeIn(1000);
     this.died = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 200,
-      'You died!', { fontSize: '32px', fill: '#fff' });
+      'You died', { fontSize: '32px', fill: '#fff' });
     this.showScore = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 100,
-      `Score: ${this.sys.game.globals.bananaScore}`, { fontSize: '32px', fill: '#fff' });
+      `Your Score: ${this.sys.game.globals.bananaScore}`, { fontSize: '32px', fill: '#fff' });
 
     this.madeByText = this.add.text(this.game.config.width / 3, this.game.config.height / 2,
-      'Insert your name:', { fontSize: '26px', fill: '#fff' });
-    video.play(true);
+      'Insert your name to submit your score:', { fontSize: '26px', fill: '#fff' });
+
+
+     this.form = this.add.dom(400,400).createFromCache('nameForm');
+
+    this.submitBtn = this.add.image(this.game.config.width / 2, (this.game.config.height / 2) + 100, 'blueButton1').setInteractive();
+    this.submitBtn.on('pointerdown', () => {
+      const usrInput = document.getElementById('nameField');
+      this.name.setText(usrInput.value);
+      usrInput.value = '';
+    });
+
+    // video.play(true);
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 

@@ -3,7 +3,7 @@ import Entity from './Entity';
 
 const gameOptions = {
 
-  numPlat: 12,
+  numPlat: 2,
 
   platformSpeedRange: [200, 500],
 

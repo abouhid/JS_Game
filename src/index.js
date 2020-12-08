@@ -6,7 +6,7 @@ import PreloaderScene from './Scenes/PreloaderScene';
 import TitleScene from './Scenes/TitleScene';
 import OptionsScene from './Scenes/OptionsScene';
 import CreditsScene from './Scenes/CreditsScene';
-import UserInput from './Scenes/UserInput';
+import Ranking from './Scenes/Ranking';
 import GameOver from './Scenes/GameOver';
 import Instructions from './Scenes/InstructionScene';
 
@@ -19,7 +19,7 @@ class Game extends Phaser.Game {
     const model = new Model();
     let bananaScore = 0
     let playerName = ''
-    this.globals = { model, bgMusic: null, bananaScore,playerName};
+    this.globals = { model, bgMusic: null, bananaScore, playerName};
     this.scene.add('Boot', BootScene);
     this.scene.add('Preloader', PreloaderScene);
     this.scene.add('Title', TitleScene);
@@ -27,8 +27,9 @@ class Game extends Phaser.Game {
     this.scene.add('Credits', CreditsScene);
     this.scene.add('Game', GameScene);
     this.scene.add('GameOver', GameOver);
+
     this.scene.add('Instructions', Instructions);
-    this.scene.add('UserInput', UserInput);
+    this.scene.add('Ranking', Ranking);
 
     this.scene.start('Boot');
   }

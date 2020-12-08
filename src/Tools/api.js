@@ -1,48 +1,36 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable guard-for-in */
+import 'regenerator-runtime';
+
+const fetch = require('node-fetch');
+
+const key = '1SC1U5Tz9rgyJmYwAT3I';
+const URI = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${key}/scores/`;
 const api = (() => {
-  const key = '3iQSf78uoxnjIp4Ix9cP';
-
-  const ScoreList = async () => {
-    try {
-      const scores = await fetch(
-        `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${key}/scores/`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      return scores.json();
-    } catch (error) {
-      return error.json();
-    }
+  const api = URI;
+  const writeScore = async (user, score) => {
+    const body = JSON.stringify({ user, score });
+    const data = {
+      method: 'POST',
+      mode: 'cors',
+      body,
+    };
+    const resp = await fetch(api, data);
+    const res = await resp.json();
+    return res;
   };
 
-  const submit = async (name, score) => {
-    try {
-      const result = await fetch(
-        `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${key}/scores/`,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            user: name,
-            score: Number(score),
-          }),
-        },
-      );
-
-      return result.json();
-    } catch (error) {
-      return error.json();
-    }
+  const readScore = async () => {
+    const data = {method: 'GET'};
+    const resp = await fetch(api, data);
+    const scores = await resp.json();
+    return scores.result;
   };
 
-  return { submit, ScoreList };
+  return {
+    writeScore,
+    readScore,
+  };
 })();
 
 export default api;

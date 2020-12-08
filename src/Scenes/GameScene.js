@@ -86,7 +86,7 @@ export default class GameScene extends Phaser.Scene {
   hit(player, baddie) {
     this.player.body.setVelocityY(380);
     this.cameras.main.flash();
-    this.player.health -= 40;
+    this.player.health -= 240;
     baddie.destroy(baddie.x, baddie.y);
 
     this.health.setText(`Health: ${this.player.health}`);
@@ -106,6 +106,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
+
+
     this.cameras.main.once('camerafadeincomplete', (camera) => {
       camera.fadeOut(4000);
     });
@@ -114,6 +116,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.pause();
     this.input.disabled = true;
     this.cameras.main.fadeOut(1000);
+    this.sys.game.globals.bgMusic.stop();
 
     const self = this;
 

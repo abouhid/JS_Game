@@ -25,8 +25,11 @@ export default class TitleScene extends Phaser.Scene {
     this.creditsButton = new Button(this, config.width / 2,430, 'blueButton1', 'blueButton2', 'Credits', 'Credits');
 
     // Input
-    this.InputButton = new Button(this, config.width / 2,500, 'blueButton1', 'blueButton2', 'Ranking', 'UserInput');
+    this.InputButton = new Button(this, config.width / 2,500, 'blueButton1', 'blueButton2', 'Ranking', 'Ranking');
 
+   
+  }
+  update(){
     this.model = this.sys.game.globals.model;
     if (this.model.musicOn === true && this.model.bgMusicPlaying === false) {
       this.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });
@@ -36,11 +39,4 @@ export default class TitleScene extends Phaser.Scene {
     }
   }
 
-  centerButton(gameObject, offset = 0) {
-    Phaser.Display.Align.In.Center(
-      gameObject,
-      this.add.zone(config.width / 2, config.height / 2 - offset * 100,
-        config.width, config.height),
-    );
-  }
 }
