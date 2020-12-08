@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Entity from './Entity';
 
-
 const gameOptions = {
 
   numPlat: 2,
@@ -10,9 +9,9 @@ const gameOptions = {
 
   spawnRange: [100, 700],
 
-  platformSizeRange: [100, 500],
+  platformSizeRange: [100, 450],
 };
-let i = 0;
+
 export default class Platform extends Entity {
   constructor(scene, x, y, key) {
     super(scene, x, y, key, 'Platform');
@@ -32,8 +31,8 @@ export default class Platform extends Entity {
       },
     });
 
-    const dPlat = (game.config.height * 1) / 3;
-    let platHeight = (game.config.height * 2) / 3;
+    const dPlat = (this.scene.game.config.height * 1) / 3;
+    let platHeight = (this.scene.game.config.height * 2) / 3;
     this.scene.distPlat = platHeight - dPlat;
 
     const times = x => f => {
@@ -43,15 +42,14 @@ export default class Platform extends Entity {
       }
     };
 
-    this.scene.ground = this.scene.add.tileSprite(game.config.width/2,
-      game.config.height+100,
-      game.config.width,
+    this.scene.ground = this.scene.add.tileSprite(this.scene.game.config.width / 2,
+      this.scene.game.config.height + 100,
+      this.scene.game.config.width,
       32,
-      'platform',
-    );
+      'platform');
     this.scene.physics.add.existing(this.scene.ground);
     this.scene.ground.body.setImmovable(true);
-    this.scene.ground.displayHeight = 300
+    this.scene.ground.displayHeight = 300;
 
 
     times(this.scene.numPlat)(() => {
@@ -72,8 +70,7 @@ export default class Platform extends Entity {
   }
 
   addPlatform(platformWidth, posX, posY) {
-    let platform;
-    platform = this.scene.add.tileSprite(
+    const platform = this.scene.add.tileSprite(
       posX,
       posY,
       platformWidth,
@@ -89,7 +86,6 @@ export default class Platform extends Entity {
       ) * -1,
     );
     this.scene.platformGroup.add(platform);
-    i++;
     this.scene.time.addEvent({
       delay: 500,
       callback() {
@@ -98,7 +94,7 @@ export default class Platform extends Entity {
         if (platform.x < 0) {
           platform.body.setVelocityX(velocity);
         }
-        if (platform.x > game.config.width) {
+        if (platform.x > this.scene.game.config.width) {
           platform.body.setVelocityX(velocity * -1);
         }
       },

@@ -7,13 +7,15 @@ export default class Item extends Entity {
     super(scene, x, y, key, 'item');
 
     this.gameOptions = {
-      intervalX: [(game.config.width * 0.2), (game.config.width * 0.8)],
-      intervalY: [(game.config.height * 2 / 3) - 1 * (game.config.height / 3) * (this.scene.numPlat), (game.config.height * 1.8) / 3],
+      intervalX: [(this.scene.game.config.width * 0.2), (this.scene.game.config.width * 0.8)],
+      intervalY: [(this.scene.game.config.height * (2 / 3)) - 1
+        * (this.scene.game.config.height / 3)
+        * (this.scene.numPlat), (this.scene.game.config.height * 1.8) / 3],
     };
 
     this.scene.anims.create({
       key: 'spin',
-      frames: this.scene.anims.generateFrameNumbers('banana', { start:5, end: 8 }),
+      frames: this.scene.anims.generateFrameNumbers('banana', { start: 5, end: 8 }),
       frameRate: 5,
       repeat: -1,
     });
@@ -30,18 +32,16 @@ export default class Item extends Entity {
     this.foods = this.scene.physics.add.group();
 
     this.createBanana();
-    for (let i = 0; i < this.scene.numPlat / 2; i++) {
+    for (let i = 0; i < this.scene.numPlat / 2; i += 1) {
       this.createOrb();
     }
     this.createFood();
-
   }
 
   createOrb() {
-    // this.star = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 40, 'star');
-
-    this.orb = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0], this.gameOptions.intervalX[1]),
-      Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), 'orbs');
+    this.orb = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
+      this.gameOptions.intervalX[1]),
+    Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), 'orbs');
     this.orbs.add(this.orb);
     this.orbs.children.iterate(orb => {
       orb.play('orbs');
@@ -49,18 +49,18 @@ export default class Item extends Entity {
   }
 
   createFood() {
-    const healthItem = ['pizza', 'heart','beer'];
-    this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0], this.gameOptions.intervalX[1]),
-      Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]), (healthItem[Math.round(Math.random())]));
+    const healthItem = ['pizza', 'heart', 'beer'];
+    this.food = this.scene.add.sprite(Phaser.Math.Between(this.gameOptions.intervalX[0],
+      this.gameOptions.intervalX[1]),
+    Phaser.Math.Between(this.gameOptions.intervalY[0], this.gameOptions.intervalY[1]),
+    (healthItem[Math.round(Math.random())]));
     this.foods.add(this.food);
   }
 
   createBanana() {
-    for (let i = 0; i < this.scene.numPlat; i++) {
-      // console.log(this.scene.platformGroup.children.entries[i].y)
-      //  this.banana = this.scene.add.sprite(300, 300, 'banana');
-
-      this.banana = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x, this.scene.platformGroup.children.entries[i].y - 30, 'banana');
+    for (let i = 0; i < this.scene.numPlat; i += 1) {
+      this.banana = this.scene.add.sprite(this.scene.platformGroup.children.entries[i].x,
+        this.scene.platformGroup.children.entries[i].y - 30, 'banana');
       this.bananas.add(this.banana);
       this.banana.body.setSize(28, 47);
       this.banana.body.setGravityY(500);
@@ -74,8 +74,8 @@ export default class Item extends Entity {
 
   update() {
     if (this.x < 0) {
-      this.x = game.config.width;
-    } else if (this.x >= game.config.width) {
+      this.x = this.scene.game.config.width;
+    } else if (this.x >= this.scene.game.config.width) {
       this.x = 0;
     }
   }

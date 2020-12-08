@@ -54,7 +54,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // update progress bar
     this.load.on('progress', (value) => {
-      percentText.setText(`${parseInt(value * 100)}%`);
+      percentText.setText(`${parseInt(value * 100, 10)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRect(250, 280, 300 * value, 30);
@@ -94,7 +94,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.spritesheet('banana', '../src/assets/banana.png', {
       frameWidth: 31,
-      frameHeight: 58
+      frameHeight: 58,
     });
     this.load.spritesheet('orbs', '../src/assets/orbs.png', {
       frameWidth: 32,
@@ -106,7 +106,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-  
+
     this.load.image('heart', '../src/assets/heart.png');
     this.load.image('pizza', '../src/assets/pizza.png');
 
@@ -118,12 +118,9 @@ export default class PreloaderScene extends Phaser.Scene {
     });
   }
 
-  create() {
-  }
-
   ready() {
-    this.scene.start('Game');
-    this.readyCount++;
+    this.scene.start('Title');
+    this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');
     }

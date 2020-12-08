@@ -16,12 +16,14 @@ export default class Enemy extends Entity {
 
   createEnemy() {
     const gameOptions = {
-      intervalX: [(game.config.width * 0.2), (game.config.width * 0.8)],
-      intervalY: [(game.config.height * 2 / 3) - 1 * (game.config.height / 3) * (this.scene.numPlat), (game.config.height * 1.8) / 3],
+      intervalX: [(this.scene.game.config.width * 0.2), (this.scene.game.config.width * 0.8)],
+      intervalY: [(this.scene.game.config.height * (2 / 3)) - 1
+        * (this.scene.game.config.height / 3) * (this.scene.numPlat),
+      (this.scene.game.config.height * 1.8) / 3],
       repeat: [-8, 2],
     };
     const velocity = 100;
-    this.baddie = this.scene.add.sprite(game.config.width,
+    this.baddie = this.scene.add.sprite(this.scene.game.config.width,
       Phaser.Math.Between(gameOptions.intervalY[0], gameOptions.intervalY[1]), 'raffa');
     this.baddies.add(this.baddie);
     this.baddie.body.setVelocityX(-velocity);
@@ -33,7 +35,7 @@ export default class Enemy extends Entity {
   update() {
     this.baddies.children.each((enemy) => {
       if (enemy.x < 0) {
-        enemy.x = game.config.width;
+        enemy.x = this.scene.game.config.width;
       }
     });
   }

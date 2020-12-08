@@ -1,19 +1,19 @@
 import Phaser from 'phaser';
-import config from '../Config/config';
 
 export default class GameOver extends Phaser.Scene {
   constructor() {
     super('GameOver');
+    this.game = window;
   }
 
   create() {
     this.cameras.main.fadeIn(1000);
-    this.died = this.add.text(game.config.width / 3, game.config.height / 2 - 200,
+    this.died = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 200,
       'You died!', { fontSize: '32px', fill: '#fff' });
-    this.showScore = this.add.text(game.config.width / 3, game.config.height / 2 - 100,
+    this.showScore = this.add.text(this.game.config.width / 3, this.game.config.height / 2 - 100,
       `Score: ${this.bananaScore}`, { fontSize: '32px', fill: '#fff' });
 
-    this.madeByText = this.add.text(game.config.width / 3, game.config.height / 2,
+    this.madeByText = this.add.text(this.game.config.width / 3, this.game.config.height / 2,
       'Insert your name:', { fontSize: '26px', fill: '#fff' });
   }
 
@@ -22,17 +22,17 @@ export default class GameOver extends Phaser.Scene {
   }
 
   resize() {
-    const canvas = document.querySelector('canvas');
+    this.canvas = document.querySelector('canvas');
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
-    const gameRatio = game.config.width / game.config.height;
+    const gameRatio = this.game.config.width / this.game.config.height;
     if (windowRatio < gameRatio) {
-      canvas.style.width = `${windowWidth}px`;
-      canvas.style.height = `${windowWidth / gameRatio}px`;
+      this.canvas.style.width = `${windowWidth}px`;
+      this.canvas.style.height = `${windowWidth / gameRatio}px`;
     } else {
-      canvas.style.width = `${windowHeight * gameRatio}px`;
-      canvas.style.height = `${windowHeight}px`;
+      this.canvas.style.width = `${windowHeight * gameRatio}px`;
+      this.canvas.style.height = `${windowHeight}px`;
     }
   }
 }

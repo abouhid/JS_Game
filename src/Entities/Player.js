@@ -77,12 +77,12 @@ export default class Player extends Entity {
 
   update() {
     this.scene.cameras.main.centerOn(
-      game.config.width / 2,
+      this.scene.game.config.width / 2,
       this.y - this.scene.game.config.height / 10,
     );
     if (this.x < 0) {
-      this.x = game.config.width;
-    } else if (this.x >= game.config.width) {
+      this.x = this.scene.game.config.width;
+    } else if (this.x >= this.scene.game.config.width) {
       this.x = 0;
     }
   }
