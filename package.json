@@ -55,6 +55,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "node-fetch": "^2.6.1",
     "phaser": "^3.24.1"
   }
 }

@@ -86,7 +86,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.audio('bgMusic', ['/src/assets/TownTheme.mp3']);
 
     // load html
-    this.load.html('nameForm', '/src/Forms/NameForm.html');
+    this.load.html('form', '../src/Forms/form.html');
 
     // gamescene
     this.load.image('farm', '../src/assets/farm.jpg');
@@ -126,7 +126,7 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   ready() {
-    this.scene.start('Title');
+    this.scene.start('GameOver');
     this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');
