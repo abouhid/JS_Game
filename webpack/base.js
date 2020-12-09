@@ -9,6 +9,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: {
+          loader: 'css-loader',
+        },
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
@@ -24,11 +30,9 @@ module.exports = {
         use: 'file-loader',
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ],
+        test: /\.mp3$/,
+
+        loader: 'file-loader',
       },
     ],
   },

@@ -1,7 +1,7 @@
 {
-  "name": "untitle-monkey-game",
+  "name": "js_game",
   "version": "1.0.0",
-  "description": "alo alo",
+  "description": "none",
   "main": "src/index.js",
   "scripts": {
     "test": "jest",

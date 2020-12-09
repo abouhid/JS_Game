@@ -83,7 +83,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('logo', '/src/assets/logo.png');
     this.load.image('box', '/src/assets/ui/grey_box.png');
     this.load.image('checkedBox', '/src/assets/ui/blue_boxCheckmark.png');
-    this.load.audio('bgMusic', ['/src/assets/jj.mp3']);
+    this.load.audio('bgMusic', ['/src/assets/TownTheme.mp3']);
 
     // load html
     this.load.html('nameForm', '/src/Forms/NameForm.html');
@@ -126,7 +126,7 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   ready() {
-    this.scene.start('GameOver');
+    this.scene.start('Title');
     this.readyCount += 1;
     if (this.readyCount === 2) {
       this.scene.start('Title');
