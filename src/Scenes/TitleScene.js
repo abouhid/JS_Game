@@ -27,7 +27,7 @@ export default class TitleScene extends Phaser.Scene {
     // Input
     this.InputButton = new Button(this, config.width / 2, 500, 'blueButton1', 'blueButton2', 'Ranking', 'Ranking');
 
-    this.add.image(150,500,'frog').setScale(0.5)
+    this.add.image(150, 500, 'frog').setScale(0.5);
   }
 
   update() {

@@ -1,4 +1,4 @@
-import Player from '../src/Entities/Player'
+import Player from '../src/Entities/Player';
 import Entity from '../src/Entities/Entity';
 
 

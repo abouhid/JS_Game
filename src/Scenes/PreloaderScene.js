@@ -83,6 +83,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('logo', '/src/assets/logo.png');
     this.load.image('box', '/src/assets/ui/grey_box.png');
     this.load.image('checkedBox', '/src/assets/ui/blue_boxCheckmark.png');
+
     this.load.audio('bgMusic', ['/src/assets/TownTheme.mp3']);
 
     // load html
@@ -91,6 +92,7 @@ export default class PreloaderScene extends Phaser.Scene {
     // gamescene
     this.load.image('farm', '../src/assets/farm.jpg');
     this.load.image('platform', '../src/assets/plattexture.png');
+    this.load.image('plane', '/src/assets/plane.png');
 
     this.load.spritesheet('banana', '../src/assets/banana.png', {
       frameWidth: 31,

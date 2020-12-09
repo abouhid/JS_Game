@@ -1,4 +1,4 @@
-import Platform from '../src/Entities/Platform'
+import Platform from '../src/Entities/Platform';
 import Entity from '../src/Entities/Entity';
 
 

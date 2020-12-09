@@ -8,39 +8,18 @@ const fetch = require('node-fetch');
 const key = '1SC1U5Tz9rgyJmYwAT3I';
 const URI = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${key}/scores/`;
 const API = (() => {
-  // const writeScore = async (user, score) => {
-  //   console.log(user)
-  //   console.log(score)
-  //   const body = JSON.stringify({ user, score });
-  //   console.log(body)
-
-  //   const data = {
-  //     method: 'POST',
-  //     headers: {
-  //      Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //               },
-  //     mode: 'cors',
-  //     body,
-  //   };
-  //   const resp = await fetch(URI, data);
-  //   const res = await resp.json();
-  //   return res;
-  // };
-
   const writeScore = async (name, score) => {
     try {
-      const body = {"user": name, "score": score};
-       console.log(body)
+      const body = { user: name, score };
       const result = await fetch(
         URI,
         {
           method: 'POST',
           mode: 'cors',
           headers: {
-            "Content-Type": "application/json; charset=utf-8"
+            'Content-Type': 'application/json; charset=utf-8',
           },
-          credentials: "same-origin",
+          credentials: 'same-origin',
           body: JSON.stringify(body),
         },
       );

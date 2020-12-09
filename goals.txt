@@ -9,6 +9,9 @@ tests
 deploy
 API
 
+change health - of raffa
+change condition for congratulations
+number of platforms
 
 
 Copyright/Attribution Notice: 

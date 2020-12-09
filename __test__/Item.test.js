@@ -1,4 +1,4 @@
-import Item from '../src/Entities/Item'
+import Item from '../src/Entities/Item';
 import Entity from '../src/Entities/Entity';
 
 
