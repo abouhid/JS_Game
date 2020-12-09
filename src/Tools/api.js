@@ -51,7 +51,7 @@ const api = (() => {
     const data = { method: 'GET' };
     const resp = await fetch(URI, data);
     const scores = await resp.json();
-    return scores;
+    return scores.result;
   };
 
   return {
