@@ -18,20 +18,23 @@ export default class GameOver extends Phaser.Scene {
     this.showScore = this.add.text(100, 200,
       `Your Score: ${this.sys.game.globals.bananaScore}`, { fontSize: '32px', fill: 'black' });
 
-    this.form = this.add.dom(200, 400).createFromCache('form');
-    console.log(this.form)
+    //  let el = document.createElement('form');
+
+    //  this.form = this.add.dom(200, 200).createFromCache('form');
+    // console.log(this.form.cache.entries.entries.form)
+    
+
 
     // console.log(this.sys.game.globals.bananaScore)
-    let playerName = 'Test333';
-    //  let score = 10;
-
-     console.log(Number(this.sys.game.globals.bananaScore))
-
+    
+    
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
-
-
-    this.submitBtn = this.add.image(300, 300, 'blueButton1').setInteractive();
-    this.submitBtn.on('pointerdown', () => {
+    this.submitBtn = document.getElementById('submit_name')
+    
+    // this.submitBtn = this.add.image(300, 300, 'blueButton1').setInteractive();
+    
+    this.submitBtn.addEventListener('click', () => {
+      let playerName = document.getElementById('username').value;
       let score = `${this.sys.game.globals.bananaScore}`;
 
       const loadMessage = this.add.text(100, 200,

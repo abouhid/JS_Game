@@ -10,6 +10,10 @@ import Ranking from './Scenes/Ranking';
 import GameOver from './Scenes/GameOver';
 import Instructions from './Scenes/InstructionScene';
 
+document.body.innerHTML+= `<div class='submit_name'>
+    <input type="text" placeholder="Please enter your name" id='username' name='username'>
+    <button type="button" id="submit_name">Submit</button>
+  </div>`
 
 import Model from './Model';
 
