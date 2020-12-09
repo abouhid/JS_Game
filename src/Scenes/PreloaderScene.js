@@ -84,10 +84,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('box', '/src/assets/ui/grey_box.png');
     this.load.image('checkedBox', '/src/assets/ui/blue_boxCheckmark.png');
 
-    this.load.audio('bgMusic', ['/src/assets/TownTheme.mp3']);
-
-    // load html
-    this.load.html('form', '../src/Forms/form.html');
+    this.load.audio('bgMusic', ['../src/assets/music/jj.mp3']);
+    this.load.audio('mariodeath', ['../src/assets/music/mariodeath.mp3']);
+    this.load.audio('ff', ['../src/assets/music/ff.mp3']);
+    this.load.audio('mariogo', ['../src/assets/music/mariogo.mp3']);
 
     // gamescene
     this.load.image('farm', '../src/assets/farm.jpg');
@@ -123,8 +123,6 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32.5,
     });
-
-    this.load.video('gameover', '../src/assets/gameover.mp4');
   }
 
   ready() {

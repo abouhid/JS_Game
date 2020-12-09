@@ -25,11 +25,16 @@ export default class GameOver extends Phaser.Scene {
     this.physics.add.existing(this.raffa);
 
     this.raffa.body.setVelocityX(-200);
-    if (this.sys.game.globals.bananaScore > 0) {
+
+    if (this.sys.game.globals.bananaScore > 500) {
+      this.ff = this.sound.add('ff', { volume: 0.05, loop: false });
+      this.ff.play();
       this.speech = this.add.text(125, 190,
         '          CONTRATULATIONS!\nTwelve managed to buy his plane ticket!\n          See you in Ipanema!',
         { fontSize: '26px', fill: 'black' });
     } else {
+      this.mariogo = this.sound.add('mariogo', { volume: 0.05, loop: false });
+      this.mariogo.play();
       this.speech = this.add.text(125, 190,
         '                OH NO!\nTwelve did not get the bananas needed (500 B$) \n         and missed the flight!\n    I guess he will need to try again!',
         { fontSize: '22px', fill: 'black' });
@@ -46,6 +51,13 @@ export default class GameOver extends Phaser.Scene {
     this.text = this.add.text(360, 480, 'Menu', { fontSize: '32px', fill: '#fff' });
 
     this.button.on('pointerdown', () => {
+      if (this.ff){
+      this.ff.stop();
+    }
+    if (this.mariogo){
+      this.mariogo.stop();
+    }
+
       this.submitBtn.style.display = 'none';
       this.formInput.style.display = 'none';
       self.scene.start('Title');
@@ -55,6 +67,13 @@ export default class GameOver extends Phaser.Scene {
     this.formInput.style.display = 'inline';
 
     this.submitBtn.addEventListener('click', () => {
+      if (this.ff){
+        this.ff.stop();
+      }
+      if (this.mariogo){
+        this.mariogo.stop();
+      }
+
       const playerName = this.formInput.value;
 
       const score = `${this.sys.game.globals.bananaScore}`;

@@ -106,20 +106,21 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.cameras.main.once('camerafadeincomplete', (camera) => {
-      camera.fadeOut(4000);
-    });
+    this.sys.game.globals.bgMusic.stop();
+    this.mariodeath = this.sound.add('mariodeath', { volume: 0.05, loop: false });
+    this.mariodeath.play();
     this.player.setTint(0xff0000);
     this.player.anims.play('turn');
     this.physics.pause();
     this.input.disabled = true;
-    this.cameras.main.fadeOut(1000);
-    this.sys.game.globals.bgMusic.stop();
+     this.cameras.main.fadeOut(2000);
+  
+    
 
     const self = this;
 
     this.time.addEvent({
-      delay: 1500,
+      delay: 3500,
       callback() {
         self.scene.start('GameOver');
       },
