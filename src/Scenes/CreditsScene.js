@@ -22,6 +22,8 @@ export default class CreditsScene extends Phaser.Scene {
 
     this.check = this.add.text(this.game.config.width / 9, this.game.config.height / 2,
       'Check me up on: https://github.com/abouhid/', { fontSize: '26px', fill: 'black' });
+      this.check = this.add.text(this.game.config.width / 9, this.game.config.height / 2 + 100,
+     "I'd like to dedicate this game to my special friends from Wroclaw ❤️", { fontSize: '26px', fill: 'black' });
 
 
     this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
