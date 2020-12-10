@@ -27,13 +27,13 @@ export default class GameOver extends Phaser.Scene {
     this.raffa.body.setVelocityX(-200);
 
     if (this.sys.game.globals.bananaScore > 500) {
-      this.ff = this.sound.add('ff', { volume: 0.05, loop: false });
+      this.ff = this.sound.add('ff', { volume: 0.15, loop: false });
       this.ff.play();
       this.speech = this.add.text(125, 190,
         '          CONTRATULATIONS!\nTwelve managed to buy his plane ticket!\n          See you in Ipanema!',
         { fontSize: '26px', fill: 'black' });
     } else {
-      this.mariogo = this.sound.add('mariogo', { volume: 0.05, loop: false });
+      this.mariogo = this.sound.add('mariogo', { volume: 0.15, loop: false });
       this.mariogo.play();
       this.speech = this.add.text(125, 190,
         '                OH NO!\nTwelve did not get the bananas needed (500 B$) \n         and missed the flight!\n    I guess he will need to try again!',

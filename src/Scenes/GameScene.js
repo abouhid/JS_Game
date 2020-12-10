@@ -62,6 +62,7 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.item.bananas.children.entries.length === 0) {
       this.enemy.createEnemy();
+      this.enemy.createEnemy();
       this.item.createPierogi();
       this.item.createBanana();
       this.item.createFood();
@@ -107,7 +108,7 @@ export default class GameScene extends Phaser.Scene {
 
   gameOver() {
     this.sys.game.globals.bgMusic.stop();
-    this.mariodeath = this.sound.add('mariodeath', { volume: 0.05, loop: false });
+    this.mariodeath = this.sound.add('mariodeath', { volume: 0.15, loop: false });
     this.mariodeath.play();
     this.player.setTint(0xff0000);
     this.player.anims.play('turn');

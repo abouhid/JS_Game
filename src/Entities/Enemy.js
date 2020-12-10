@@ -16,11 +16,9 @@ export default class Enemy extends Entity {
 
   createEnemy() {
     const gameOptions = {
-      intervalX: [(this.scene.game.config.width * 0.2), (this.scene.game.config.width * 0.8)],
       intervalY: [(this.scene.game.config.height * (2 / 3)) - 1
         * (this.scene.game.config.height / 3) * (this.scene.numPlat),
       (this.scene.game.config.height * 1.8) / 3],
-      repeat: [-8, 2],
     };
     const velocity = 100;
     this.baddie = this.scene.add.sprite(this.scene.game.config.width,
