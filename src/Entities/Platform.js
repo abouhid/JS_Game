@@ -5,7 +5,7 @@ const gameOptions = {
 
   numPlat: 12,
 
-  platformSpeedRange: [200, 500],
+  platformSpeedRange: [200, 400],
 
   spawnRange: [100, 700],
 

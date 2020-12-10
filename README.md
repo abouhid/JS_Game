@@ -32,6 +32,13 @@
 ## Game instructions:
 
 > Here you can find all the Game Instructions:
+- Move around with W,A,S,D;
+- You can double jump once while in the air;
+- Health item give you +10 of health;
+- Enemies take out -40 of health;
+- There are items that give you an extra jump midair once;
+- Once you get all the bananas, the other ones are reset and you can collect them again;
+- If you collect 50 bananas you can end up with the Congratulations Game Over.
 
 ![screenshot](./src/assets/img3.png)
 

@@ -29,11 +29,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.score = this.add.text(630, 50, `Bananas: ${this.sys.game.globals.bananaScore}`, {
       fontSize: '20px',
-      fill: 'black',
+      fill: 'red',
     });
     this.health = this.add.text(50, 50, `Health: ${this.player.health}`, {
       fontSize: '20px',
-      fill: 'black',
+      fill: 'red',
     });
 
     this.score.setScrollFactor(0);
