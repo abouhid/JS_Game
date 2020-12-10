@@ -12,6 +12,7 @@
 > *"I don't know anything about this Cyberpunk 2077 that is being released today... 'Twelve is Missing' is the epitome of gaming!" - IGN*
 
 > *"A delayed game is eventually good but a rushed game is forever bad, 'Twelve is Missing!' took as long as it needed" - Shigeru Miyamoto*
+
 > *"AA-OO" - Twelve Demanky*
 
 
@@ -62,7 +63,7 @@ Open http://localhost:3000/ on your browser.
 - Babel
 - Leaderboard API
 - JEST testing
-- Netlify
+- Heroku
 - ESlint and Stylelint as linters
 
 ## Authors
