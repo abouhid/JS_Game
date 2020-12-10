@@ -60,6 +60,8 @@ export default class GameOver extends Phaser.Scene {
 
       this.submitBtn.style.display = 'none';
       this.formInput.style.display = 'none';
+      this.sys.game.globals.bananaScore = 0
+
       self.scene.start('Title');
     });
     this.form = form;
@@ -92,6 +94,7 @@ export default class GameOver extends Phaser.Scene {
       this.submitBtn.style.display = 'none';
       this.formInput.style.display = 'none';
       document.getElementById('username').value = '';
+      this.sys.game.globals.bananaScore = 0
       self.scene.start('Title');
     });
   }
