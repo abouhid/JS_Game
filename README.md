@@ -63,7 +63,7 @@ Open http://localhost:3000/ on your browser.
 - Babel
 - Leaderboard API
 - JEST testing
-- Netlify
+- Heroku
 - ESlint and Stylelint as linters
 
 ## Authors
