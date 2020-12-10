@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "webpack --config webpack/base.js ",
     "heroku-postbuild": "webpack -p",
-    "start": "node server.js"
+    "start": "webpack-dev-server --config webpack/base.js --open"
   },
   "jest": {
     "setupFiles": [
