@@ -113,9 +113,8 @@ export default class GameScene extends Phaser.Scene {
     this.player.anims.play('turn');
     this.physics.pause();
     this.input.disabled = true;
-     this.cameras.main.fadeOut(2000);
-  
-    
+    this.cameras.main.fadeOut(2000);
+
 
     const self = this;
 

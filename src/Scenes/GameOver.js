@@ -51,12 +51,12 @@ export default class GameOver extends Phaser.Scene {
     this.text = this.add.text(360, 480, 'Menu', { fontSize: '32px', fill: '#fff' });
 
     this.button.on('pointerdown', () => {
-      if (this.ff){
-      this.ff.stop();
-    }
-    if (this.mariogo){
-      this.mariogo.stop();
-    }
+      if (this.ff) {
+        this.ff.stop();
+      }
+      if (this.mariogo) {
+        this.mariogo.stop();
+      }
 
       this.submitBtn.style.display = 'none';
       this.formInput.style.display = 'none';
@@ -67,10 +67,10 @@ export default class GameOver extends Phaser.Scene {
     this.formInput.style.display = 'inline';
 
     this.submitBtn.addEventListener('click', () => {
-      if (this.ff){
+      if (this.ff) {
         this.ff.stop();
       }
-      if (this.mariogo){
+      if (this.mariogo) {
         this.mariogo.stop();
       }
 
