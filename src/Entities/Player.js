@@ -1,33 +1,89 @@
+import Phaser from 'phaser';
 import Entity from './Entity';
 
 export default class Player extends Entity {
-    constructor (scene, x, y, key) {
-      super(scene, x, y, key, 'player');
-      this.setData('speed', 300);
-      this.setData('health', 3);
-      this.setData('inmune', false);
-      this.setData('score', 0);
+  constructor(scene, x, y, key) {
+    super(scene, x, y, key, 'Player');
+
+    this.cursors = scene.input.keyboard.createCursorKeys();
+    this.health = 100;
+
+    this.scene.anims.create({
+      key: 'left',
+      frames: this.scene.anims.generateFrameNumbers('dude', {
+        start: 12,
+        end: 14,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: 'turn',
+      frames: this.scene.anims.generateFrameNumbers('dude',
+        {
+          start: 0,
+          end: 2,
+        }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.scene.anims.create({
+      key: 'right',
+      frames: this.scene.anims.generateFrameNumbers('dude', {
+        start: 24,
+        end: 26,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.key_W = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.key_A = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.key_S = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.key_D = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    this.body.setGravityY(500);
+  }
+
+  movements() {
+    const jumped = Phaser.Input.Keyboard.JustDown(this.cursors.up);
+    const jumpedW = Phaser.Input.Keyboard.JustDown(this.key_W);
+    if (this.cursors.left.isDown || this.key_A.isDown) {
+      this.body.setVelocityX(-200);
+
+      this.anims.play('left', true);
+    } else if (this.cursors.right.isDown || this.key_D.isDown) {
+      this.body.setVelocityX(200);
+
+      this.anims.play('right', true);
+    } else {
+      this.body.setVelocityX(0);
+      if (this.body.touching.down) {
+        this.anims.play('turn');
+      }
     }
-    
-    moveUp() {
-      this.body.velocity.y = -this.getData('speed');
-    }
-  
-    moveDown() {
-      this.body.velocity.y = this.getData('speed');
-    }
-  
-    moveLeft() {
-      this.body.velocity.x = -this.getData('speed');
-    }
-  
-    moveRight() {
-      this.body.velocity.x = this.getData('speed');
-    }
-  
-    update () {
-      this.body.setVelocity(0, 0);
-      this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-      this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+
+    if (jumped || jumpedW) {
+      if (this.body.touching.down) {
+        this.canJump = true;
+        this.body.setVelocityY(-380);
+      } else if (this.canJump) {
+        this.canJump = false;
+        this.body.setVelocityY(-380);
+      }
     }
   }
+
+  update() {
+    this.scene.cameras.main.centerOn(
+      this.scene.game.config.width / 2,
+      this.y - this.scene.game.config.height / 10,
+    );
+    if (this.x < 0) {
+      this.x = this.scene.game.config.width;
+    } else if (this.x >= this.scene.game.config.width) {
+      this.x = 0;
+    }
+  }
+}
