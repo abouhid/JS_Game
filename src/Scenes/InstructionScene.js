@@ -31,16 +31,16 @@ export default class Instructions extends Phaser.Scene {
     this.text2 = this.add.text(95, 180,
       'He needs to grab as many bananas as possible to trade for \nhis plane ticket to Rio de Janeiro (First Class, of course).', { fontSize: '18px', fill: 'black' });
 
-    this.text3 = this.add.text(95, 240,
-      'There are 12 platforms in which each one have a banana, \nonce you get all 12 bananas, the other ones will be reset', { fontSize: '18px', fill: 'black' });
-    this.text4 = this.add.text(95, 295,
-      'Pierogis will push you up and recharge your \nmidair jump', { fontSize: '18px', fill: 'black' });
+    this.text3 = this.add.text(95, 230,
+      'There are 12 platforms in which each one have a banana, once\nyou get all 12 bananas, the other ones will be reset (+10B$).', { fontSize: '18px', fill: 'black' });
+    this.text4 = this.add.text(95, 285,
+      'Pierogis will push you up and recharge your midair jump.\nLikewise the health items, they appear randomly each time \nyou collect all bananas.', { fontSize: '18px', fill: 'black' });
 
     this.text5 = this.add.text(95, 350,
-      'There are special items that will appear everytime you collect \nall bananas to heal you (yes, he likes drinking)', { fontSize: '18px', fill: 'black' });
+      'There are special items that will heal you \n(+10 of health. Yes, he likes drinking).', { fontSize: '18px', fill: 'black' });
 
     this.text6 = this.add.text(95, 410,
-      'Watch out for Raffas! They want to steal your \nbananas because they want to go to Brazil \nas well (-40 of health and push you down)', { fontSize: '18px', fill: 'black' });
+      'Watch out for Raffas! They want to steal your \nbananas because they want to go to Brazil \nas well (-40 of health and push you down).', { fontSize: '18px', fill: 'black' });
 
     this.menuButton = new Button(this, 250, 520, 'blueButton1', 'blueButton2', 'Menu', 'Title');
     this.start = new Button(this, 500, 520, 'blueButton1', 'blueButton2', 'Start', 'Game');

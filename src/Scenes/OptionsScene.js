@@ -58,4 +58,23 @@ export default class OptionsScene extends Phaser.Scene {
       this.soundButton.setTexture('checkedBox');
     }
   }
+
+  update() {
+    this.resize();
+  }
+
+  resize() {
+    this.canvas = document.querySelector('canvas');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const windowRatio = windowWidth / windowHeight;
+    const gameRatio = this.game.config.width / this.game.config.height;
+    if (windowRatio < gameRatio) {
+      this.canvas.style.width = `${windowWidth}px`;
+      this.canvas.style.height = `${windowWidth / gameRatio}px`;
+    } else {
+      this.canvas.style.width = `${windowHeight * gameRatio}px`;
+      this.canvas.style.height = `${windowHeight}px`;
+    }
+  }
 }

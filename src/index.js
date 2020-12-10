@@ -9,8 +9,6 @@ import CreditsScene from './Scenes/CreditsScene';
 import Ranking from './Scenes/Ranking';
 import GameOver from './Scenes/GameOver';
 import Instructions from './Scenes/InstructionScene';
-
-
 import Model from './Model';
 
 class Game extends Phaser.Game {

@@ -3,13 +3,13 @@ import Entity from './Entity';
 
 const gameOptions = {
 
-  numPlat: 2,
+  numPlat: 12,
 
   platformSpeedRange: [200, 500],
 
   spawnRange: [100, 700],
 
-  platformSizeRange: [100, 450],
+  platformSizeRange: [140, 420],
 };
 
 export default class Platform extends Entity {

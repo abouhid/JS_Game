@@ -31,12 +31,29 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   update() {
+    this.resize();
+
     this.model = this.sys.game.globals.model;
     if (this.model.musicOn === true && this.model.bgMusicPlaying === false) {
       this.bgMusic = this.sound.add('bgMusic', { volume: 0.05, loop: true });
       this.bgMusic.play();
       this.model.bgMusicPlaying = true;
       this.sys.game.globals.bgMusic = this.bgMusic;
+    }
+  }
+
+  resize() {
+    const canvas = document.querySelector('canvas');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const windowRatio = windowWidth / windowHeight;
+    const gameRatio = this.game.config.width / this.game.config.height;
+    if (windowRatio < gameRatio) {
+      canvas.style.width = `${windowWidth}px`;
+      canvas.style.height = `${windowWidth / gameRatio}px`;
+    } else {
+      canvas.style.width = `${windowHeight * gameRatio}px`;
+      canvas.style.height = `${windowHeight}px`;
     }
   }
 }

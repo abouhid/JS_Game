@@ -10,7 +10,7 @@ class Ranking extends Phaser.Scene {
   create() {
     this.bg_1 = this.add.image(-100, -150, 'farm').setOrigin(0).setScrollFactor(0);
 
-    this.menuButton = new Button(this, 500, 550, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+    this.menuButton = new Button(this, 400, 500, 'blueButton1', 'blueButton2', 'Menu', 'Title');
     this.add.image(150, 500, 'frog').setScale(0.5);
 
 
@@ -18,9 +18,10 @@ class Ranking extends Phaser.Scene {
     API.readScore().then((scores) => {
       const topScores = scores.sort((a, b) => b.score - a.score).slice(0, 12);
       loadMessage.destroy();
-      this.add.text(240, 95, 'TOP12   NAME  SCORE', { fontSize: '26px', fill: 'black' });
+      this.add.text(240, 65, 'TOP12  SCORE  NAME  ', { fontSize: '26px', fill: 'black' });
       topScores.forEach((playerScore, line) => {
-        this.add.text(250, 110 + 30 * (line + 1), ` ${line + 1}      ${playerScore.user}     ${playerScore.score}   `, { fontSize: '22px', fill: 'black' });
+        this.add.text(250, 70 + 30 * (line + 1), ` ${line + 1}      ${playerScore.score}`, { fontSize: '22px', fill: 'black' });
+        this.add.text(450, 70 + 30 * (line + 1), `${playerScore.user}`, { fontSize: '22px', fill: 'black' });
       });
     }).catch(() => {
       alert('Unable to get the Ranking'); // eslint-disable-line no-alert
