@@ -20,6 +20,8 @@
   },
   "ignorePatterns": [
     "dist/",
-    "build/"
+    "build/",
+    "bundle.js",
+    "server.js"
   ]
 }
