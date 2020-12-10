@@ -4,7 +4,7 @@
 
 # Twelve is Missing!
 
-> This projects consists of a Javascript game built with Phaser 3.
+> This projects consists of a Javascript Platform Game built with Phaser 3, as aked for in the Microverse Program.
 
 ![screenshot](./src/assets/img1.png)
 ![screenshot](./src/assets/img2.png)
