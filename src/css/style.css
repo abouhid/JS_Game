@@ -1,0 +1,24 @@
+body {
+    width: 100%;
+    background: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+  }
+  #username {
+width: 50vh;
+position: absolute;
+margin-top: 70vh;
+margin-left: -40vh;
+display: none;
+}
+#submit_name {
+position: absolute;
+margin-top: 70vh;
+margin-left: 25vh;
+display: none;
+
+}
+  canvas {
+    margin: auto;
+  }
