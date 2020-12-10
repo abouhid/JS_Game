@@ -26,7 +26,7 @@ export default class GameOver extends Phaser.Scene {
 
     this.raffa.body.setVelocityX(-200);
 
-    if (this.sys.game.globals.bananaScore > 500) {
+    if (this.sys.game.globals.bananaScore >= 500) {
       this.ff = this.sound.add('ff', { volume: 0.15, loop: false });
       this.ff.play();
       this.speech = this.add.text(125, 190,
